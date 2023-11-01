@@ -1,0 +1,146 @@
+.pagination{
+
+    .page-item .page-link{
+        background-color: transparent; /* Blue background color */
+        color: #2285ba; /* Text color */
+        border: 1px solid #d5d5d5;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 16px; /* Adjust the font size to increase the size */
+        padding: 2px 10px; /* Increase padding to make the buttons larger */
+        margin: 2px; /* Adjust margin as needed */
+        min-width: 40px; /* Increase min-width to make the buttons wider */
+        text-align: center;
+        border-radius: 5px !important;
+        font-family: "roboto, sans-serif";
+        transition: all 0.3s;
+        height: 38px; /* Increase height to make the buttons taller */
+        line-height: 36px; /* Increase line-height to vertically center text */
+        text-transform: uppercase;
+
+        background: transparent;
+
+        &:hover,
+        &:focus{
+            color: #2285ba;
+            background-color: rgba(240,240,240);
+            border: none;
+        }
+    }
+
+    .arrow-margin-left,
+    .arrow-margin-right{
+        position: absolute;
+    }
+
+    .arrow-margin-right{
+        right: 0;
+    }
+
+    .arrow-margin-left{
+        left: 0;
+    }
+
+    .page-item.active > .page-link{
+        color: $light-gray;
+        box-shadow: 0px 5px 25px 0px rgba(0, 0, 0, 0.2);
+
+        &,
+        &:focus,
+        &:hover{
+            background-color: #2285ba;
+            border-color: $default-color;
+            color: $white-color;
+        }
+    }
+
+    .page-item.disabled > .page-link{
+        opacity: .5;
+        background-color: rgba(255,255,255, .2);
+        color: $white-color;
+    }
+
+    // Colors
+    &.pagination-info{
+        .page-item.active > .page-link{
+            &,
+            &:focus,
+            &:hover{
+                background-color: $brand-info;
+                border-color: $brand-info;
+            }
+        }
+    }
+
+    &.pagination-success{
+        .page-item.active > .page-link{
+            &,
+            &:focus,
+            &:hover{
+                background-color: $brand-success;
+                border-color: $brand-success;
+            }
+        }
+    }
+
+    &.pagination-primary{
+        .page-item.active > .page-link{
+            &,
+            &:focus,
+            &:hover{
+                background-color: $brand-primary;
+                border-color: $brand-primary;
+            }
+        }
+    }
+
+    &.pagination-warning{
+        .page-item.active > .page-link{
+            &,
+            &:focus,
+            &:hover{
+                background-color: $brand-warning;
+                border-color: $brand-warning;
+            }
+        }
+    }
+
+    &.pagination-danger{
+        .page-item.active > .page-link{
+            &,
+            &:focus,
+            &:hover{
+                background-color: $brand-danger;
+                border-color: $brand-danger;
+            }
+        }
+    }
+
+    &.pagination-neutral{
+        .page-item > .page-link{
+            color: $white-color;
+
+            &:focus,
+            &:hover{
+                background-color: $opacity-2;
+                color: $white-color;
+            }
+        }
+
+        .page-item.active > .page-link{
+            &,
+            &:focus,
+            &:hover{
+                background-color: $white-bg;
+                border-color: $white-bg;
+                color: $brand-primary;
+            }
+        }
+    }
+
+}
+
+.pagination-container{
+    display: flex;
+    align-items: center;
+}
