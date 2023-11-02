@@ -56,7 +56,7 @@ function BlogHome() {
         My Blog  {/* Update the display with username */}
         </h1>
 
-      {username ? (
+      {/* {username ? (
         <Button
           as="span"
           style={{
@@ -69,7 +69,7 @@ function BlogHome() {
         >
           Add Blog
         </Button>
-      ):null}
+      ):null} */}
 
       {showBlogPost ? <BlogPost /> : <BlogList />}
 

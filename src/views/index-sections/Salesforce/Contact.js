@@ -2,10 +2,27 @@ import React from "react";
 import { Container, Row, Col } from "reactstrap";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import { useRef } from "react";
+import emailjs from 'emailjs-com';
+
 
 function Examples() {
+  const form = useRef();
+
+  const sendEmail = (e)=>{
+    e.preventDefault();
+
+    emailjs.sendForm('service_3n9zoyh', 'template_61ophpq', form.current, '0_YtEx01a1OusTTDW')
+      .then((result) => {
+        console.log(result.text);
+      }, (error) => {
+        console.log(error.text);
+      });
+
+    e.target.reset();
+  }
   return (
-    <div style={{ height: "80vh", marginBottom:"8%",marginTop:"5%"}}>
+    <div style={{ height: "80vh", marginBottom:"3%",marginTop:"5%"}}>
       <div className="space-50"></div>
       <Container className="mb-5">
         <Row>
@@ -28,14 +45,14 @@ function Examples() {
             </Row>
           </Col>
           <Col lg="6" md="6">
-  <form>
+  <form ref={form} onSubmit={sendEmail}>
     <Row>
       <Col lg="6" className="order-sm-1">
         <div className="form-group">
           <label htmlFor="firstName" style={{ fontFamily: "Futura LT W01 Medium, sans-serif", fontSize: "80%",}}>
             First Name
           </label>
-          <TextField id="firstName" variant="standard" fullWidth />
+          <TextField id="firstName" name="firstName" variant="standard" fullWidth />
         </div>
       </Col>
       <Col lg="6" className="order-sm-2">
@@ -43,7 +60,7 @@ function Examples() {
           <label htmlFor="lastName" style={{ fontFamily: "Futura LT W01 Medium, sans-serif", fontSize: "80%",}}>
             Last Name
           </label>
-          <TextField id="lastName" variant="standard" fullWidth />
+          <TextField id="lastName" name="lastName" variant="standard" fullWidth />
         </div>
       </Col>
       <Col lg="6" className="order-sm-3">
@@ -51,7 +68,7 @@ function Examples() {
           <label htmlFor="email" style={{ fontFamily: "Futura LT W01 Medium, sans-serif", fontSize: "80%",}}>
             Email
           </label>
-          <TextField id="email" variant="standard" fullWidth />
+          <TextField id="email" name="email" variant="standard" fullWidth />
         </div>
       </Col>
       <Col lg="6" className="order-sm-4">
@@ -59,7 +76,7 @@ function Examples() {
           <label htmlFor="subject" style={{ fontFamily: "Futura LT W01 Medium, sans-serif", fontSize: "80%",}}>
             Subject
           </label>
-          <TextField id="subject" variant="standard" fullWidth />
+          <TextField id="subject" name="subject" variant="standard" fullWidth />
         </div>
       </Col>
       <Col sm="12" className="order-sm-5">
@@ -67,7 +84,7 @@ function Examples() {
           <label htmlFor="message" style={{ fontFamily: "Futura LT W01 Medium, sans-serif", fontSize: "80%",}}>
             Message
           </label>
-          <TextField id="message" variant="standard" fullWidth />
+          <TextField id="message" name="message" variant="standard" fullWidth />
         </div>
       </Col>
       <Col sm="12" className="order-sm-6">
@@ -84,7 +101,7 @@ function Examples() {
         </Row>
       </Container>
       <div className="space-50"></div>
-      <Container className="mt-5 mb-md-5" style={{ background: '#E8EFF1', maxWidth: "100%", padding: '20px 0' }}>
+      <Container className="mt-5 mb-md-5" style={{ background: '#E8EFF1', maxWidth: "100%", paddingTop: '20px', paddingBottom:"5px" }}>
   <div style={{ fontSize: "13px", letterSpacing: "1.5px", fontFamily: "Avenir LT Pro 35 Light, sans-serif", background: '#E8EFF1', color: '#6E6E6D', textAlign: 'center' }}>
     © 2023 by VNS Ventures. Powered and secured by RFLABS
   </div>

@@ -27,7 +27,7 @@ function Typography() {
   
   return (
 
-    <Container className="read-main mt-5 pt-5" style={{ paddingBottom:"30%",maxWidth:"100%",backgroundColor:"#FFF",justifyContent: "center", alignItems: "center", textAlign: "center" }}>
+    <Container className="read-main mt-5 pt-5" style={{ maxWidth: "100%",paddingBottom:"30%",maxWidth:"100%",backgroundColor:"#FFF",justifyContent: "center", alignItems: "center", textAlign: "center" }}>
       <h1 className="read-h1" style={{ fontFamily: "Futura LT W01 Medium, sans-serif", fontSize: "180%", fontWeight: 600 }}>Reading Materials
 </h1>
 <Container className="read-container mt-5 pt-3" style={{ maxWidth: "60%", lineHeight: "1.5em" }}>
@@ -37,8 +37,9 @@ function Typography() {
 
  </Container>
  {/* <Auth0ProviderWithNavigate> */}
+ <FileUploadTable />
 
-<FileUploadTable />
+
 {/* </Auth0ProviderWithNavigate> */}
          
       <style>

@@ -2,6 +2,13 @@ import React, { useState, useEffect } from 'react';
 import {  Avatar } from '@material-ui/core';
 import { deepOrange } from '@material-ui/core/colors';
 import { Container, Table, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'; // Corrected import statements
+import {
+  faFileImage,
+  faFileAudio,
+  faFileVideo,
+  faFilePdf,
+  faFileAlt,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faSearch,
@@ -10,7 +17,7 @@ import {
   faFile,
   faBars, // Add the bars icon
 } from '@fortawesome/free-solid-svg-icons'; 
-import { faStar as faStarOutline, faFilePdf } from '@fortawesome/free-regular-svg-icons';
+import { faStar as faStarOutline } from '@fortawesome/free-regular-svg-icons';
 import Button from 'react-bootstrap/Button';
 import { FiImage, FiVideo, FiMusic, FiFileText, FiFile } from 'react-icons/fi';
 import { saveAs } from 'file-saver';
@@ -214,7 +221,7 @@ const handleFileUpload = async (uploadedFile) => {
 
     setFavoritedFiles(favoritedFileIds);
     const handleResize = () => {
-      if (window.matchMedia('(min-width: 280px) and (max-width: 766px)').matches) {
+      if (window.matchMedia('(min-width: 280px) and (max-width: 912px)').matches) {
         setIsMobile(true);
       } else {
         setIsMobile(false);
@@ -326,24 +333,40 @@ function getContributorFromCookie() {
   const filteredFiles = files.filter((file) => file.fileName.toLowerCase().includes(searchTerm.toLowerCase()));
 
   // Function to get an appropriate file type icon
+  // const getFileTypeIcon = (fileType) => {
+  //   if (fileType.startsWith('image')) {
+  //     return <span><FiImage /> Image</span>;
+  //   } else if (fileType.startsWith('video')) {
+  //     return <span><FiVideo /> Video</span>;
+  //   } else if (fileType.startsWith('audio')) {
+  //     return <span><FiMusic /> Audio</span>;
+  //   } else if (fileType.startsWith('text')) {
+  //     return <span><FiFileText /> Text</span>;
+  //   } else if (fileType === 'application/pdf') {
+  //     return   <img
+  //     alt="..."
+  //     src={require("assets/img/pdf_icon-fotor-bg-remover-20231024162137.png")}
+  //     style={{ width: "20%", height: "100%" }}
+  //   ></img>; // Special handling for PDF files
+  //   }
+  //   return <span><FiFile /> File</span>;
+  // };
+
   const getFileTypeIcon = (fileType) => {
-    if (fileType.startsWith('image')) {
-      return <span><FiImage /> Image</span>;
-    } else if (fileType.startsWith('video')) {
-      return <span><FiVideo /> Video</span>;
-    } else if (fileType.startsWith('audio')) {
-      return <span><FiMusic /> Audio</span>;
-    } else if (fileType.startsWith('text')) {
-      return <span><FiFileText /> Text</span>;
-    } else if (fileType === 'application/pdf') {
-      return   <img
-      alt="..."
-      src={require("assets/img/pdf_icon-fotor-bg-remover-20231024162137.png")}
-      style={{ width: "20%", height: "100%" }}
-    ></img>; // Special handling for PDF files
+    switch(fileType) {
+      case 'image':
+        return <FontAwesomeIcon icon={faFileImage} style={{fontSize:"26px"}}/>;
+      case 'audio':
+        return <FontAwesomeIcon icon={faFileAudio} style={{fontSize:"26px"}}/>;
+      case 'video':
+        return <FontAwesomeIcon icon={faFileVideo} style={{fontSize:"26px"}}/>;
+      case 'application/pdf':
+        return <FontAwesomeIcon icon={faFilePdf} style={{fontSize:"26px"}} />;
+      default:
+        return <FontAwesomeIcon icon={faFileAlt} style={{fontSize:"26px"}}/>;
     }
-    return <span><FiFile /> File</span>;
   };
+  
 
   // Function to format file size in terms of MB/KB
   const getFileSize = (sizeInBytes) => {
@@ -516,7 +539,7 @@ function getContributorFromCookie() {
   return (
     <div style={{ justifyContent: "center", alignItems: "center", textAlign: "center" }}>
     {!isMobile &&(
-      <Container style={{ maxWidth: '90%' }}>
+      <Container style={{ maxWidth: '70%', justifyContent: "center", alignItems: "center", textAlign: "center" }}>
         <div
           style={{
             fontFamily: "Avenir LT Pro 35 Light, sans-serif",
@@ -574,7 +597,7 @@ function getContributorFromCookie() {
           </label>
         </div>
 
-        <Table className='fileTable' style={{ fontFamily: "Avenir LT Pro 35 Light, sans-serif", fontSize: "14px", maxWidth:"93%" }}>
+        <Table className='fileTable' style={{ fontFamily: "Avenir LT Pro 35 Light, sans-serif", fontSize: "14px", maxWidth:"100%" }}>
           <thead style={{ fontFamily: "Avenir LT Pro 35 Light, sans-serif", fontSize: "13px", fontWeight: 400 }}>
             <tr>
               <th
@@ -648,8 +671,8 @@ function getContributorFromCookie() {
                 <tr key={index} style={{ padding: '50px', justifyContent: "left" }}>
               
 
-              <td
-                style={{ cursor: 'pointer', color: '', fontSize: "14.5px", width: "40%", padding: "6% 0%", textAlign: "left" }}
+              {/* <td
+                style={{ cursor: 'pointer', color: '', fontSize: "14.5px", width: "40%", padding: "4% 0%", textAlign: "left" }}
                 onClick={() => viewFile(file.id)} // This line executes the download function on click
                 >
                 <div>
@@ -671,14 +694,19 @@ function getContributorFromCookie() {
   )}
 </div>
 
+              </td> */}
+              <td style={{ cursor: 'pointer', color: '', fontSize: "14.5px", width: "40%", padding: "4% 0%", textAlign: "left" }}
+              onClick={() => viewFile(file.id)}>
+                {getFileTypeIcon(file.fileType)} {file.fileName}
               </td>
+
                 {/* <td style={{ padding: '4%', textAlign: 'left', fontSize:"13px", width:"20%" }}>{formatDate(file.uploadDate)}{}</td> */}
-              <td style={{ padding: '7% 0%', textAlign: 'center', width: "20%", fontSize:"13px" }}>
+              <td style={{ padding: '5% 0%', textAlign: 'center', width: "20%", fontSize:"13px" }}>
                   {formatDate(file.uploadDate)}
                 </td>
 
-                <td style={{ padding: '7% 0%', textAlign: 'center', width:"",fontSize:"13px" }}>{file.views}</td>
-                <td style={{ padding: '7% 0%', textAlign: 'left', width:"",fontSize:"13px" }}>
+                <td style={{ padding: '5% 0%', textAlign: 'center', width:"",fontSize:"13px" }}>{file.views}</td>
+                <td style={{ padding: '5% 0%', textAlign: 'left', width:"",fontSize:"13px" }}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <FontAwesomeIcon
                       icon={file.favorites > 0 ? faStarRegular : faStarOutline}
@@ -689,7 +717,7 @@ function getContributorFromCookie() {
                   </div>
                 </td>
 
-                <td style={{ padding: '7% 0%', textAlign: 'center', width:"20%",fontSize:"13px" }}>
+                <td style={{ padding: '5% 0%', textAlign: 'center', width:"20%",fontSize:"13px" }}>
                   <div style={{display: 'flex', alignItems: 'center'}}>
                   <Avatar src={file.profilePicture} style={{ width: "28px", height: "28px", marginRight:"5px" }} />
                 {file.contributor.split('@')[0]}
@@ -697,7 +725,7 @@ function getContributorFromCookie() {
                   </div>
                 </td>
 
-                <td style={{ fontWeight: "normal", padding: '7% 2%', textAlign: 'left' }}>
+                <td style={{ fontWeight: "normal", padding: '5% 2%', textAlign: 'left' }}>
                 {contributor && (
 
                 <Dropdown isOpen={dropdownOpen[index]} toggle={() => toggleDropdown(index)}>

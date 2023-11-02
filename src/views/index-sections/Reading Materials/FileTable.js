@@ -530,8 +530,7 @@ function getContributorFromCookie() {
   
   
   return (
-    <div style={{ justifyContent: "center", alignItems: "center", textAlign: "center" }}>
-      <Container style={{ maxWidth: '90%' }}>
+    <div style={{ justifyContent: "center", background:"", alignItems: "center", textAlign: "center", maxWidth:"100%" }}>
         <div
           style={{
             fontFamily: "Avenir LT Pro 35 Light, sans-serif",
@@ -541,12 +540,12 @@ function getContributorFromCookie() {
             marginBottom: '10px',
           }}
         >
-          <p style={{ flex: 1, fontSize: "14px", textAlign: 'left' }}>Files & Folders</p>
+          <p className='files-class' style={{ flex: 1, fontSize: "14px", textAlign: 'left' }}>Files & Folders</p>
           
        
         </div>
 
-        <Table className='fileTable' style={{ fontFamily: "Avenir LT Pro 35 Light, sans-serif", fontSize: "14px", maxWidth:"95%" }}>
+        <Table className='fileTable' style={{ fontFamily: "Avenir LT Pro 35 Light, sans-serif", fontSize: "14px", maxWidth:"100%" }}>
           <thead style={{ fontFamily: "Avenir LT Pro 35 Light, sans-serif", fontSize: "16.7px", fontWeight: 400 }}>
             <tr>
               
@@ -586,6 +585,7 @@ function getContributorFromCookie() {
                 border: "none",
                 fontSize: "22px"
               }}
+              className='btn-class'
               onClick={toggleModal}
             >
               +
@@ -596,23 +596,23 @@ function getContributorFromCookie() {
               </th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className='tbody-class' style={{ maxWidth:"100%"}}>
           {files
             .map((file, index) => (
                 <tr key={index} style={{ padding: '50px', justifyContent: "left" }}>
               
 
-              <td
-                style={{ cursor: 'pointer', color: '', fontSize: "14.5px",  padding: "6% 0%", textAlign: "left" }}
+              <td className='name-class'
+                style={{ width:"58.5%", cursor: 'pointer', color: '', fontSize: "14.5px",  padding: "6% 0%", textAlign: "left" }}
                 onClick={() => viewFile(file.id)} // This line executes the download function on click
                 >
-                <div>
+                <div >
   {file.fileType === 'application/pdf' ? (
     <div>
       
       {file.fileName}
-      <div style={{ fontSize: "14px", color: "gray" }}>{file.views}{" Views , "}{formatDate(file.uploadDate)}</div>
-      <div style={{ display: 'flex', alignItems: 'center', fontSize: "14px", color: "gray" }}>
+      <div className='view-class' style={{ fontSize: "14px", color: "gray", margin:"3px 0" }}>{file.views}{" Views , "}{formatDate(file.uploadDate)}</div>
+      <div className='view-class' style={{ display: 'flex', alignItems: 'center', fontSize: "14px", color: "gray",margin:"3px 0" }}>
   <Avatar src={file.profilePicture} style={{ width: "14px", height: "14px", marginRight:"5px" }} />
   {file.contributor.split('@')[0]}
 </div>
@@ -621,10 +621,10 @@ function getContributorFromCookie() {
      
     </div>
   ) : (
-    <div>
+    <div className='name-class'>
        {file.fileName} 
-    <div style={{ fontSize: "14px", color: "gray" }}>{file.views}{" , "}{formatDate(file.uploadDate)}</div>
-    <div style={{ display: 'flex', alignItems: 'center', fontSize: "14px", color: "gray" }}>
+    <div className='view-class' style={{ fontSize: "14px", color: "gray",margin:"3px 0" }}>{file.views}{" , "}{formatDate(file.uploadDate)}</div>
+    <div className='view-class' style={{ display: 'flex', alignItems: 'center', fontSize: "14px", color: "gray",margin:"3px 0" }}>
   <Avatar src={file.profilePicture} style={{ width: "14px", height: "14px", marginRight:"5px" }} />
   {file.contributor.split('@')[0]}
 </div>
@@ -634,9 +634,8 @@ function getContributorFromCookie() {
 </div>
 
               </td>
-                {/* <td style={{ padding: '4%', textAlign: 'left', fontSize:"13px", width:"20%" }}>{formatDate(file.uploadDate)}{}</td> */}
               
-                <td style={{ padding: '7% 0%', textAlign: 'center', width:"",fontSize:"13px" }}>
+                <td className='menu-class' style={{ width:"10%", padding: '7% 0%', textAlign: 'center', width:"",fontSize:"13px" }}>
                 {contributor && (
 
 <Dropdown isOpen={dropdownOpen[index]} toggle={() => toggleDropdown(index)}>
@@ -671,7 +670,6 @@ function getContributorFromCookie() {
             ))}
           </tbody>
         </Table>
-      </Container>
       <style>
         {`
         /* CSS file (e.g., styles.css) */
@@ -701,6 +699,9 @@ function getContributorFromCookie() {
             background-color: white; /* Maintain white background color */
             color: black; /* Maintain black text color */
           }
+          .view-class{
+            padding-top: 1% !important;
+        }
           
           
         }
@@ -721,6 +722,48 @@ function getContributorFromCookie() {
                 }
                 .file-img span {
                   display: inline;
+                }
+              }
+              @media only screen and (min-width: 767px) and (max-width: 912px) {
+                .fileTable{
+                  max-width: 100% !important;
+                }
+                .file-img{
+                  width: 40% !important;
+                }
+                .file-img img {
+                  width: 20%;
+                }
+                .file-img span {
+                  display: inline;
+                }
+                .fileTable th {
+                  font-size: 37px !important;
+                }
+                .fileTable tr {
+                  font-size: 60px !important;
+                }
+                .btn-class{
+                  font-size: 62px !important;
+                  padding: 14% 58% !important;
+
+                }
+                .name-class{
+                  font-size: 34px !important;
+                  line-height: 1.5em !important;
+
+                }
+                .view-class{
+                  font-size: 28px !important;
+                  padding-top: 4% !important;
+                }
+                .menu-class{
+                  font-size: 30px !important;
+
+                }
+                .files-class{
+                  font-size: 36px !important;
+
                 }
               }
         

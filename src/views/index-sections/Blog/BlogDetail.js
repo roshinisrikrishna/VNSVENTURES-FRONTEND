@@ -130,6 +130,11 @@ function formatDate(dateString) {
 
       </Container>
       <RecentPosts />
+      <Container className="" style={{ background: '#E8EFF1', maxWidth: "100%", paddingTop: '20px' }}>
+  <div style={{ fontSize: "13px", letterSpacing: "1.5px", fontFamily: "Avenir LT Pro 35 Light, sans-serif", background: '#E8EFF1', color: '#6E6E6D', textAlign: 'center' }}>
+    © 2023 by VNS Ventures. Powered and secured by RFLABS
+  </div>
+</Container>
       <style>{`
             @media only screen and (min-width: 280px) and (max-width: 766px) {
               .blog-container{

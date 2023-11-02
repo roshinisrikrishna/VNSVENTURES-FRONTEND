@@ -24,6 +24,7 @@ import Reading from "views/index-sections/Reading Materials/Index";
 import Blog from "views/index-sections/Blog/Index";
 import BlogDetail from "views/index-sections/Blog/BlogDetail";
 import EditBlog from "views/index-sections/Blog/EditBlog";
+import BlogPost from "views/index-sections/Blog/BlogPost";
 
 
 
@@ -45,6 +46,8 @@ root.render(
       <Route path="trading" element={<Trading />} />
       <Route path="reading-materials" element={<Reading />} />
       <Route path="blog" element={<Blog />} />
+      <Route path="add-blog" element={<BlogPost />} />
+
       <Route path="blog/:id" element={<BlogDetail />} />
       <Route path="edit-blog/:id" element={<EditBlog />} />
 

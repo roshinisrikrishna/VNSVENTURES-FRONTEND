@@ -50,7 +50,7 @@ function formatDate(dateString) {
   const formattedDate = date.toLocaleDateString('en-US', options);
   return formattedDate;
 }
-function BlogList({ blogs }) {
+function BlogList({ blogs, title }) {
   const [selectedBlogId, setSelectedBlogId] = useState(null);
   const [selectedBlog, setSelectedBlog] = useState(null);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -69,6 +69,7 @@ function BlogList({ blogs }) {
   const [username, setUsername] = useState(null);
   const [toggledFileIds, setToggledFileIds] = useState([]);
   const [favoritedBlogs, setFavoritedBlogs] = useState([]);
+  
 
   const isMobile = useMediaQuery({ query: '(max-width: 766px)' });
 
@@ -95,10 +96,6 @@ function BlogList({ blogs }) {
   };
 
   
-    // const handleMenuOpen = (event, blogId) => {
-    //   setAnchorEl(event.currentTarget);
-    //   setSelectedBlogId(blogId);
-    // };
     const handleMenuOpen = (event, blogId, title) => {
       setAnchorEl(event.currentTarget);
       setSelectedBlogId(blogId);
@@ -113,17 +110,7 @@ function BlogList({ blogs }) {
   
   const navigate = useNavigate();
 
-   // Retrieve the favorited blog IDs from cookies when the component mounts
-  //  useEffect(() => {
-  //   const favoritedBlogIds = document.cookie.split(';')
-  //     .map(cookie => cookie.trim())
-  //     .filter(cookie => cookie.startsWith('favoritedBlog='))
-  //     .map(cookie => cookie.replace('favoritedBlog=', ''))
-  //     .map(blogId => parseInt(blogId, 10));
-
-  //   setFavoritedBlogs(favoritedBlogIds);
-  // }, []);
-
+ 
   const handleFavoriteClick = (id) => {
     const alreadyFavorited = favoritedBlogs.includes(id);
   
@@ -241,13 +228,37 @@ function BlogList({ blogs }) {
     return () => clearInterval(intervalId);
   }, []);
 
+  const addBlog = async () => {
+    try {
+      // Navigate to the BlogPost component and wait for the result
+      const newBlog = await navigate('/add-blog');
 
+      // Assuming the BlogPost component returns the updated blogs with the new blog added
+      if (newBlog) {
+        setBlogSet(newBlog); // Update the blogs in the BlogList component state
+      }
+    } catch (error) {
+      console.error('Error navigating to BlogPost:', error);
+    }
+  };
+  
 
-  const editBlogById = (id) => {
-    console.log("id at edit ",id)
-    console.log("clicking edit button")
-    navigate(`/edit-blog/${id}`);
+  const editBlogById = async(id) => {
+    
 
+    try {
+      // Navigate to the BlogPost component and wait for the result
+     
+    
+      const newBlog = await navigate(`/edit-blog/${id}`);
+
+      // Assuming the BlogPost component returns the updated blogs with the new blog added
+      if (newBlog) {
+        setBlogSet(newBlog); // Update the blogs in the BlogList component state
+      }
+    } catch (error) {
+      console.error('Error navigating to BlogPost:', error);
+    }
    
     
   }
@@ -257,22 +268,6 @@ function BlogList({ blogs }) {
     
   }
   
-  // const deleteBlogById = (id) => {
-  //   // Make an HTTP DELETE request to the server to delete the blog with the given ID
-  //   axios.delete(`http://ocrserver.trackman.in/:5005/delete-blog/${id}`)
-  //     .then((response) => {
-  //       console.log('Blog deleted successfully');
-  
-  //       // Filter out the deleted blog from the current state
-  //       const updatedBlogSet = blogSet.filter(blog => blog.id !== id);
-  
-  //       // Set the state with the updated list of blogs
-  //       setBlogSet(updatedBlogSet);
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error deleting blog:', error);
-  //     });
-  // };
   const deleteBlogById = (id) => {
     // Display a confirmation dialog
     const userConfirmed = window.confirm("Are you sure you want to delete this blog?");
@@ -410,10 +405,26 @@ function BlogList({ blogs }) {
   
     return (
       <>
+        
+
             {isMobile ? <BlogListShort /> : 
             (
 
       <Container style={{ maxWidth: '85%', color:"black" }}>
+          {username ? (
+        <Button
+          as="span"
+          style={{
+            backgroundColor: "#899DA3",
+            borderRadius: "0px",
+            padding: "5px 19px",
+            border: "none",
+          }}
+          onClick={addBlog}
+        >
+          Add Blog
+        </Button>
+      ):null}
       
         {currentBlogs.map((blog) => (
             <div key={blog.id}  style={{ cursor: 'pointer', background: "rgb(253, 253, 253, 0.9)" }}>
@@ -479,7 +490,7 @@ function BlogList({ blogs }) {
        </div>
               <CardContent >
               <div onClick={() => viewBlogById(blog.id)} style={{ display: 'flex', textAlign: "left", justifyContent: "left", alignItems: "flex-start", marginTop: '16px' }}>
-              <Avatar src={decodeURIComponent(blog.profilepicture)} style={{ width: "28px", height: "28px" }} /> {/* Adjust the size here */}
+              <Avatar className='mr-2' src={decodeURIComponent(blog.profilepicture)} style={{ width: "28px", height: "28px" }} /> {/* Adjust the size here */}
                 <Typography variant="body2" style={{ fontFamily: "Futura LT W01 Medium, sans-serif", color: "black" }}>{blog?.username}</Typography>
               </div>
                 <div onClick={() => viewBlogById(blog.id)} style={{ display: 'flex', textAlign:"left",justifyContent:"left",alignItems:"flex-start", marginTop: '8px' }}>
@@ -520,10 +531,11 @@ function BlogList({ blogs }) {
   onClick={() => handleFavoriteClick(blog.id)}
 >
   {blog.favorites > 0 ? (
-    <div style={{ display: 'flex', alignItems: 'center' }}>
-      <FavoriteIcon sx={{ color: pink[500] }} />
-      <span style={{ marginLeft: '4px', fontSize: "50%" }}>{blog.favorites}</span>
-    </div>
+   <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+   <span style={{ position: 'absolute', top: '-10px', left: '50%', transform: 'translateX(-50%)', fontSize: "50%" }}>{blog.favorites}</span>
+   <FavoriteIcon sx={{ color: pink[500] }} />
+ </div>
+ 
   ) : (
     <FavoriteBorderOutlinedIcon sx={{ color: pink[500] }} />
   )}

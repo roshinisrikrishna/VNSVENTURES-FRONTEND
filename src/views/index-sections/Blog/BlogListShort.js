@@ -239,21 +239,36 @@ function BlogListShort({ blogs }) {
     return () => clearInterval(intervalId);
   }, []);
 
+  const addBlog = async () => {
+    try {
+      // Navigate to the BlogPost component and wait for the result
+      const newBlog = await navigate('/add-blog');
 
+      // Assuming the BlogPost component returns the updated blogs with the new blog added
+      if (newBlog) {
+        setBlogSet(newBlog); // Update the blogs in the BlogList component state
+      }
+    } catch (error) {
+      console.error('Error navigating to BlogPost:', error);
+    }
+  };
 
-  const editBlogById = (id) => {
-    console.log("id at edit ",id)
-    console.log("clicking edit button")
-    navigate(`/edit-blog/${id}`);
+  const editBlogById = async(id) => {
+      try {
+      // Navigate to the BlogPost component and wait for the result   
+      const newBlog = await navigate(`/edit-blog/${id}`);
 
+      // Assuming the BlogPost component returns the updated blogs with the new blog added
+      if (newBlog) {
+        setBlogSet(newBlog); // Update the blogs in the BlogList component state
+      }
+    } catch (error) {
+      console.error('Error navigating to BlogPost:', error);
+    }
    
     
   }
-  const handleEditSubmit = () => {
-    // Update the blog on the server
-    console.log("edit id at handleSubmit",selectedBlog.id," title ",editedBlog.title)
-    
-  }
+  
   
   const deleteBlogById = (id) => {
     // Display a confirmation dialog
@@ -392,6 +407,20 @@ function BlogListShort({ blogs }) {
   
     return (
       <Container style={{ maxWidth: '85%', color:"black" }}>
+        {username ? (
+        <Button
+          as="span"
+          style={{
+            backgroundColor: "#899DA3",
+            borderRadius: "0px",
+            padding: "5px 19px",
+            border: "none",
+          }}
+          onClick={addBlog}
+        >
+          Add Blog
+        </Button>
+      ):null}
       
         {currentBlogs.map((blog) => (
             <div key={blog.id}  style={{ cursor: 'pointer', background: "rgb(253, 253, 253, 0.9)" }}>
@@ -457,7 +486,7 @@ function BlogListShort({ blogs }) {
        </div>
               <CardContent >
               <div onClick={() => viewBlogById(blog.id)} style={{ display: 'flex', textAlign: "left", justifyContent: "left", alignItems: "flex-start", marginTop: '16px' }}>
-              <Avatar src={decodeURIComponent(blog.profilepicture)} style={{ width: "28px", height: "28px" }} /> {/* Adjust the size here */}
+              <Avatar className='mr-2' src={decodeURIComponent(blog.profilepicture)} style={{ width: "28px", height: "28px" }} /> {/* Adjust the size here */}
                 <Typography variant="body2" style={{ fontFamily: "Futura LT W01 Medium, sans-serif", color: "black" }}>{blog?.username}</Typography>
               </div>
                 <div onClick={() => viewBlogById(blog.id)} style={{ display: 'flex', textAlign:"left",justifyContent:"left",alignItems:"flex-start", marginTop: '8px' }}>
@@ -498,10 +527,11 @@ function BlogListShort({ blogs }) {
   onClick={() => handleFavoriteClick(blog.id)}
 >
   {blog.favorites > 0 ? (
-    <div style={{ display: 'flex', alignItems: 'center' }}>
-      <FavoriteIcon sx={{ color: pink[500] }} />
-      <span style={{ marginLeft: '4px', fontSize: "50%" }}>{blog.favorites}</span>
-    </div>
+    <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+    <span style={{ position: 'absolute', top: '-10px', left: '50%', transform: 'translateX(-50%)', fontSize: "50%" }}>{blog.favorites}</span>
+    <FavoriteIcon sx={{ color: pink[500] }} />
+  </div>
+  
   ) : (
     <FavoriteBorderOutlinedIcon sx={{ color: pink[500] }} />
   )}

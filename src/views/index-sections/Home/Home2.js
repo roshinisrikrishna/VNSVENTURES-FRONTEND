@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Row, Col, Card } from "reactstrap";
 import { motion } from "framer-motion";
+import { useNavigate } from 'react-router-dom';
 
 // Animation variants for fading in elements
 const fadeInAnimationVariants = {
@@ -20,6 +21,8 @@ const fadeInAnimationVariants = {
 };
 
 function Typography() {
+  const navigate = useNavigate();
+
   return (
     <div className="career-main">
     <Row style={{ letterSpacing: "1px"}}>
@@ -34,17 +37,13 @@ function Typography() {
   We develop innovative IOT solutions which save time and money for any organization
 </p>
 
-<p className="career-p2" style={{
+<p className="career-pr1" style={{
   fontSize: "80%",
   fontWeight: 500,
   margin: "20px 0",
-  borderBottom: "2px solid black",
-  display: "inline-block",
-  borderSpacing: "50px 0", // Adjust the spacing as needed
-  borderCollapse: "separate",
   textDecoration:"underline",
   fontFamily: "Avenir LT Pro 35 Light, sans-serif"
-}}>
+}}  onClick={() => window.open('https://www.rflabs.in', '_blank')}>
   Read More
 </p>
         </Col>
@@ -53,18 +52,14 @@ function Typography() {
           <h1 className="career-h1" style={{fontFamily: "Futura LT W01 Medium, sans-serif",fontSize: "180%", fontWeight: 500, margin: "0", padding: "0" }}>Skilled Cohort</h1>
           <p className="career-p" style={{fontFamily: "Futura LT W01 Medium, sans-serif",fontSize: "80%", fontWeight: 600, margin: "50px 0 0 0", lineHeight: "1", letterSpacing: "-0.2px" }}>CTO, skilledcohort.com</p>
           <p className="career-p2" style={{  fontFamily: "Avenir LT Pro 35 Light, sans-serif",fontSize: "80%", fontWeight: 400, margin: "10px 0", lineHeight: "1", letterSpacing: "-0.2px" }}> We make salesforce work for you.We are offcial salesforce partners and specialize in revops and security</p>
-<p className="career-p2" style={{
+<p className="career-pr2" style={{
    fontSize: "80%",
    fontWeight: 500,
    margin: "20px 0",
-   borderBottom: "2px solid black",
-   display: "inline-block",
-   borderSpacing: "50px 0", // Adjust the spacing as needed
-   borderCollapse: "separate",
    textDecoration:"underline",
    fontFamily: "Avenir LT Pro 35 Light, sans-serif"
 
-}}>
+}}  onClick={() => window.open('https://cohort.com', '_blank')}>
   Read More
 </p>
 
@@ -74,14 +69,14 @@ function Typography() {
           <h1 className="career-h1" style={{fontFamily: "Futura LT W01 Medium, sans-serif",fontSize: "180%", fontWeight: 500, margin: "0", padding: "0" }}>VNS Ventures</h1>
           <p className="career-p" style={{fontFamily: "Futura LT W01 Medium, sans-serif",fontSize: "80%", fontWeight: 600, margin: "50px 0 0 0", lineHeight: "1", letterSpacing: "-0.2px" }}>CEO, vnsventures.com</p>
           <p className="career-p2" style={{  fontFamily: "Avenir LT Pro 35 Light, sans-serif",fontSize: "80%", fontWeight: 400, margin: "10px 0", lineHeight: "1", letterSpacing: "-0.2px" }}> Dreams to Reality</p>
-<p className="career-p2" style={{
+<p className="career-pr3" style={{
   fontSize: "80%",
   fontWeight: 500,
   margin: "20px 0",
   textDecoration:"underline",
   fontFamily: "Avenir LT Pro 35 Light, sans-serif"
 
-}}>
+}} onClick={() => navigate('/trading')}>
   Read More
 </p>
 
@@ -91,13 +86,13 @@ function Typography() {
           <h1 className="career-h1" style={{fontFamily: "Futura LT W01 Medium, sans-serif",fontSize: "180%", fontWeight: 500, margin: "0", padding: "0" }}>Jay & Dhiv Charity</h1>
           <p className="career-p" style={{fontFamily: "Futura LT W01 Medium, sans-serif",fontSize: "80%", fontWeight: 600, margin: "20px 0 0 0", lineHeight: "1", letterSpacing: "-0.2px" }}>Cochair,board member</p>
           <p className="career-p2" style={{fontFamily: "Avenir LT Pro 35 Light, sans-serif",fontSize: "80%", fontWeight: 400, margin: "10px 0", lineHeight: "1", letterSpacing: "-0.2px" }}> Enhance people lives</p>
-          <p className="career-p2" style={{
+          <p className="career-pr4" style={{
   fontSize: "80%",
   fontWeight: 500,
   margin: "20px 0",
   textDecoration:"underline",
   fontFamily: "Avenir LT Pro 35 Light, sans-serif"
-}}>
+}} onClick={() => navigate('/my-approach')}>
   Read More
 </p>
 
@@ -130,6 +125,12 @@ function Typography() {
           max-width: 80% !important;
           
         }
+        .career-pr{
+          font-size: 17px !important;
+          font-weight: 500 !important;
+          max-width: 80% !important;
+          
+        }
         .career-col{
           display: flex;
           flex-direction: column;
@@ -156,6 +157,13 @@ function Typography() {
           max-width: 80% !important;
           
         }
+        .career-pr1,.career-pr2,.career-pr3,.career-pr4{
+          font-size: 36px !important;
+          font-weight: 500 !important;
+          max-width: 80% !important;
+          
+        }
+        
         .career-col{
           display: flex;
           flex-direction: column;
@@ -165,7 +173,22 @@ function Typography() {
       
            }
       @media only screen and (min-width: 1024px) {
-        
+        .career-pr1{
+          padding-top: 15% !important;
+          
+        }
+        .career-pr2{
+          padding-top: 8% !important;
+          
+        }
+        .career-pr3{
+          padding-top: 26% !important;
+          
+        }
+        .career-pr4{
+          padding-top: 23% !important;
+          
+        }
               
             }
       

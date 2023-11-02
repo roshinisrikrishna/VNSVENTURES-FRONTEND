@@ -34,31 +34,31 @@ function Typography() {
       <Row className="goal-row" style={{ letterSpacing: "1px", maxWidth: "100%",justifyContent: "center", alignItems:"center", textAlign:"center" }}>
 
       <Col className="goal-col" lg={2} sm={12} style={{  marginRight:"-2%",padding: "3%", justifyContent: "center", textAlign: "center", lineHeight: "1.2em" }}>
-          <Avatar className="goal-avatar" sx={{ bgcolor: "#CCC6C6",fontFamily: "Futura LT W01 Medium, sans-serif", fontSize: "180%",color:"black",padding:"25% 25% 25% 32%" }}>1.</Avatar> {/* Use the MUI Avatar component */}
-         <p className="goal-p" style={{ textAlign:"left", fontFamily: "Avenir LT Pro 35 Light, sans-serif", fontSize: "70%", fontWeight: 400, margin: "10px 0", lineHeight: "1", letterSpacing: "-0.2px" }}> Why Choose US</p>
+          <Avatar className="goal-avatar" style={{ background: "#CCC6C6",fontFamily: "Futura LT W01 Medium, sans-serif", fontSize: "180%",color:"black",padding:"32% 28% 32% 36%" }}>1.</Avatar> {/* Use the MUI Avatar component */}
+         <p className="goal-p" style={{ textAlign:"center", fontFamily: "Avenir LT Pro 35 Light, sans-serif", fontSize: "72%", fontWeight: 400, margin: "10px 0", lineHeight: "1", letterSpacing: "-0.2px" }}> Why Choose US</p>
          
         </Col>
         
         <Col className="goal-col" lg={2} sm={12} style={{  marginRight:"-2%",padding: "3%", justifyContent: "center", textAlign: "center", lineHeight: "1.2em" }}>
-          <Avatar className="goal-avatar" sx={{ bgcolor: "#FADCD6",fontFamily: "Futura LT W01 Medium, sans-serif", fontSize: "180%",color:"black",padding:"25% 25% 25% 32%" }}>2.</Avatar> {/* Use the MUI Avatar component */}
-          <p className="goal-p" style={{ textAlign:"left", fontFamily: "Avenir LT Pro 35 Light, sans-serif", fontSize: "70%", fontWeight: 400, margin: "10px 0", lineHeight: "1", letterSpacing: "-0.2px" }}> Our Process</p>
+          <Avatar className="goal-avatar" style={{ background: "#FADCD6",fontFamily: "Futura LT W01 Medium, sans-serif", fontSize: "180%",color:"black",padding:"32% 28% 32% 36%" }}>2.</Avatar> {/* Use the MUI Avatar component */}
+          <p className="goal-p" style={{ textAlign:"center", fontFamily: "Avenir LT Pro 35 Light, sans-serif", fontSize: "72%", fontWeight: 400, margin: "10px 0", lineHeight: "1", letterSpacing: "-0.2px" }}> Our Process</p>
           
         </Col>
         <Col className="goal-col" lg={2} sm={12} style={{marginTop:"2%",marginRight:"-2%", padding: "3%", justifyContent: "center", textAlign: "center", lineHeight: "1.2em" }}>
-          <Avatar className="goal-avatar" sx={{ bgcolor: "#E5C7B5",fontFamily: "Futura LT W01 Medium, sans-serif", fontSize: "180%",color:"black",padding:"25% 25% 25% 32%" }}>3.</Avatar> {/* Use the MUI Avatar component */}
-          <p className="goal-p" style={{ textAlign:"left", fontFamily: "Avenir LT Pro 35 Light, sans-serif", fontSize: "70%", fontWeight: 400, margin: "10px 0", lineHeight: "1", letterSpacing: "-0.2px" }}> Frequently Asked Questions</p>
+          <Avatar className="goal-avatar" style={{ background: "#E5C7B5",fontFamily: "Futura LT W01 Medium, sans-serif", fontSize: "180%",color:"black",padding:"32% 28% 32% 36%" }}>3.</Avatar> {/* Use the MUI Avatar component */}
+          <p className="goal-p" style={{ textAlign:"center", fontFamily: "Avenir LT Pro 35 Light, sans-serif", fontSize: "72%", fontWeight: 400, margin: "10px 0", lineHeight: "1", letterSpacing: "-0.2px" }}> Frequently Asked Questions</p>
           
         </Col>
         <Col className="goal-col" lg={2} sm={12} style={{  marginRight:"-2%",padding: "3%", justifyContent: "center", textAlign: "center", lineHeight: "1.2em" }}>
-          <Avatar className="goal-avatar" sx={{ bgcolor: "#9fbac2",fontFamily: "Futura LT W01 Medium, sans-serif", fontSize: "180%",color:"black",padding:"25% 25% 25% 32%" }}>4.</Avatar> {/* Use the MUI Avatar component */}
+          <Avatar className="goal-avatar" style={{ background: "#9fbac2",fontFamily: "Futura LT W01 Medium, sans-serif", fontSize: "180%",color:"black",padding:"32% 28% 32% 36%" }}>4.</Avatar> {/* Use the MUI Avatar component */}
          
-          <p className="goal-p" style={{ textAlign:"left", fontFamily: "Avenir LT Pro 35 Light, sans-serif", fontSize: "70%", fontWeight: 400, margin: "10px 0", lineHeight: "1", letterSpacing: "-0.2px" }}> Testimonials</p>
+          <p className="goal-p" style={{ textAlign:"center", fontFamily: "Avenir LT Pro 35 Light, sans-serif", fontSize: "72%", fontWeight: 400, margin: "10px 0", lineHeight: "1", letterSpacing: "-0.2px" }}> Testimonials</p>
          
         </Col>
         <Col className="goal-col" lg={2} sm={12} style={{  padding: "3%", justifyContent: "center", textAlign: "center", lineHeight: "1.2em" }}>
-          <Avatar className="goal-avatar" sx={{ bgcolor: "#e9f4f7",fontFamily: "Futura LT W01 Medium, sans-serif", fontSize: "180%",color:"black",padding:"25% 25% 25% 32%" }}>5.</Avatar> {/* Use the MUI Avatar component */}
+          <Avatar className="goal-avatar" style={{background:"#e9f4f7",fontFamily: "Futura LT W01 Medium, sans-serif", fontSize: "180%",color:"black",padding:"32% 28% 32% 36%"}} >5.</Avatar> {/* Use the MUI Avatar component */}
          
-          <p className="goal-p" style={{ textAlign:"left", fontFamily: "Avenir LT Pro 35 Light, sans-serif", fontSize: "70%", fontWeight: 400, margin: "10px 0", lineHeight: "1", letterSpacing: "-0.2px" }}> Contact Us</p>
+          <p className="goal-p" style={{ textAlign:"center", fontFamily: "Avenir LT Pro 35 Light, sans-serif", fontSize: "72%", fontWeight: 400, margin: "10px 0", lineHeight: "1", letterSpacing: "-0.2px" }}> Contact Us</p>
          
         </Col>
       </Row>

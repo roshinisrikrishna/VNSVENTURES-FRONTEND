@@ -25,14 +25,30 @@ function EditBlog({ blogData, onSave, onCancel }) {
   const handleSave = () => {
     axios.put(`https://vnsserver.onrender.com/update-blog/${editedBlog.id}`, editedBlog)
       .then((response) => {
+        console.log("editedBlog",editedBlog)
         onSave(editedBlog);
 
       })
       .catch((error) => {
         console.error('Error updating blog:', error);
       });
-      navigate(`/blog`);
+      axios.get('https://vnsserver.onrender.com/get-blogs')
+      .then((response) => {
+        const data = response.data;
+        console.log('Retrieved updated blog data:', data);
 
+        // Sort the blogs based on the uploaded date in descending order (most recent first)
+        data.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        // Set the state with the updated list of blogs in BlogList component
+        // setBlogs(data);
+        navigate('/blog', { state: { blogs: data } });
+
+        
+      })
+      .catch((error) => {
+        console.error('Error fetching updated blog data:', error);
+      });
   };
   const handleCancel = () => {
     // Use history to navigate back to the BlogList page
@@ -62,7 +78,7 @@ function EditBlog({ blogData, onSave, onCancel }) {
           />
         </div>
         <div className="mb-3">
-        <InputGroupText>Blog Subtitle</InputGroupText>
+        <InputGroupText>Blog Description</InputGroupText>
         </div>
         <div className="mb-3">
         <Input
@@ -74,7 +90,7 @@ function EditBlog({ blogData, onSave, onCancel }) {
         />
         </div>
         <div className="mb-3">
-        <InputGroupText>Blog Description</InputGroupText>
+        <InputGroupText>Blog Content</InputGroupText>
         </div>
         <div className="mb-3">
         <Input

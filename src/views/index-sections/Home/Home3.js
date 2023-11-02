@@ -1,6 +1,8 @@
 import React from "react";
 import { Container, Row, Col, Card } from "reactstrap";
 import { motion } from "framer-motion";
+import { useNavigate } from 'react-router-dom';
+
 
 // Animation variants for fading in elements
 const fadeInAnimationVariants = {
@@ -20,6 +22,8 @@ const fadeInAnimationVariants = {
 };
 
 function Typography() {
+  const navigate = useNavigate();
+
   return (
     <div className="main-approach" style={{ }}>
     <Row style={{ letterSpacing: "1px"}}>
@@ -35,7 +39,7 @@ their unique needs and vision, and then use our expertise to create a product th
   fontWeight: 500,
   margin: "20px 0",
   textDecoration:"underline"
-}}>
+}} onClick={() => navigate('/my-approach')}>
   Read More
 </p>
         </Col>
@@ -43,27 +47,27 @@ their unique needs and vision, and then use our expertise to create a product th
         <Col lg={3} style={{ backgroundColor: "#FFF", padding: "0", justifyContent: "center", textAlign: "center", lineHeight: "1.2em" }}>
   <img className="approach-img"
     alt="..."
-    src={require("assets/img/vikram_image.webp")}
-    // style={{ width: "100%", height: "100%" }}
+    src={require("assets/img/ezgif.com-resize (3).webp")}
+    style={{ width: "100%", height: "100%" }} 
   ></img>
 </Col>
 
-        <Col className="approach-col" lg={3} style={{backgroundColor:"#CCC6C6",padding:"3%",justifyContent: "center", textAlign: "center", lineHeight: "1.2em"}}>
+        <Col className="approach-col" lg={3} style={{backgroundColor:"#CCC6C6",padding:"1% 2.5%",justifyContent: "center", textAlign: "center", lineHeight: "1.2em"}}>
         <h1 className="approach-h2" style={{fontFamily: "Futura LT W01 Medium, sans-serif", fontSize: "180%", fontWeight: 500, margin: "0", padding: "0"}}>About Me</h1>
   
-  <p className="approach-p2" style={{ fontSize: "76.9%", fontWeight: 500, margin: "30px 0", lineHeight: "1.5em", letterSpacing: "0px",fontFamily: "Avenir LT Pro 35 Light, sans-serif" }}>
+  <p className="approach-p2" style={{ fontSize: "76.9%", fontWeight: 500, margin: "15px 0", lineHeight: "1.5em", letterSpacing: "0px",fontFamily: "Avenir LT Pro 35 Light, sans-serif" }}>
   Vikram N Subramaniam is a successful professional with a Master's degree in Engineering 
   from Dalhousie University, Canada. He is the chairman of VNS group of companies, an 
   Indian multinational group that operates across the globe. As a Software Architect by 
   profession, he has achieved great success in his career. In addition to his professional
    achievements, he is a keen investor with excellent business acumen. He has a 
    philanthropic side and is known for his charitable work.<br/>   <span style={{
-  fontSize: "100%",
-  fontWeight: 500,
-  textDecoration:"underline",
-}}>
-  Read More
-</span></p>
+        fontSize: "100%",
+        fontWeight: 500,
+        textDecoration:"underline",
+      }} onClick={() => navigate('/about-me')}>
+        Read More
+      </span></p>
        
 
 
