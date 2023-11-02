@@ -69,7 +69,8 @@ function BlogList({ blogs, title }) {
   const [username, setUsername] = useState(null);
   const [toggledFileIds, setToggledFileIds] = useState([]);
   const [favoritedBlogs, setFavoritedBlogs] = useState([]);
-  
+  const [isLoading, setIsLoading] = useState(true);
+
 
   const isMobile = useMediaQuery({ query: '(max-width: 766px)' });
 
@@ -184,20 +185,20 @@ function BlogList({ blogs, title }) {
   // Inside your React component where you want to fetch the blog data
   useEffect(() => {
    
-    axios.get('https://vnsserver.onrender.com/get-blogs')
-      .then((response) => {
-        const data = response.data;
-        console.log('Retrieved blog data:', data);
+    setIsLoading(true);
+  axios.get('https://vnsserver.onrender.com/get-blogs')
+    .then((response) => {
+      const data = response.data;
+      console.log('Retrieved blog data:', data);
+      data.sort((a, b) => new Date(b.date) - new Date(a.date));
+      setBlogSet(data);
+      setIsLoading(false);
+    })
+    .catch((error) => {
+      console.error('Error fetching blog data:', error);
+      setIsLoading(false);
+    });
 
-        // Sort the blogs based on the uploaded date in descending order (most recent first)
-        data.sort((a, b) => new Date(b.date) - new Date(a.date));
-        
-        setBlogSet(data);
-        // Update your component's state or perform other actions with the data
-      })
-      .catch((error) => {
-        console.error('Error fetching blog data:', error);
-      });
       const favoritedBlogIds = document.cookie.split(';')
       .map(cookie => cookie.trim())
       .filter(cookie => cookie.startsWith('favoritedBlog='))
@@ -405,10 +406,11 @@ function BlogList({ blogs, title }) {
   
     return (
       <>
-        
-
-            {isMobile ? <BlogListShort /> : 
-            (
+        {isLoading ? (
+      <div>Loading Blogs...</div>
+    ) : isMobile ? (
+      <BlogListShort />
+    ) : (
 
       <Container style={{ maxWidth: '85%', color:"black" }}>
           {username ? (

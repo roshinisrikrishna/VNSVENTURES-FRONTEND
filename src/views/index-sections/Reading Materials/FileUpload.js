@@ -63,6 +63,7 @@ const FileUploadTable = () => {
   const [profilePicture, setProfilePicture] = useState("");
   const [favoritedFiles, setFavoritedFiles] = useState([]);
   const [isMobile, setIsMobile] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
 
   const toggleDropdown = (index) => {
@@ -170,21 +171,22 @@ const handleFileUpload = async (uploadedFile) => {
   
   const fetchFileDetails = () => {
     // Make a GET request to the server's /get-file-details route
-    // const email = getCookie('email');
-    // setContributor(email);
-    axios.get('https://vnsserver.onrender.com/get-file-details')
-      .then((response) => {
-        const filesWithDropdownState = response.data.map((file, index) => ({
-          ...file,
-          dropdownOpen: false
-        }));
-        console.log("files at frontend ",filesWithDropdownState)
-        setFiles(filesWithDropdownState);
-      })
-      .catch((error) => {
-        console.error('Error fetching file details:', error);
-      });
-
+    setIsLoading(true);
+  axios.get('https://vnsserver.onrender.com/get-file-details')
+    .then((response) => {
+      const filesWithDropdownState = response.data.map((file, index) => ({
+        ...file,
+        dropdownOpen: false
+      }));
+      console.log("files at frontend ",filesWithDropdownState)
+      setFiles(filesWithDropdownState);
+      setIsLoading(false);
+    })
+    .catch((error) => {
+      console.error('Error fetching file details:', error);
+      setIsLoading(false);
+    });
+    
   };
    // Use the useEffect hook to fetch file details when the component is mounted
    useEffect(() => {
@@ -332,25 +334,6 @@ function getContributorFromCookie() {
 
   const filteredFiles = files.filter((file) => file.fileName.toLowerCase().includes(searchTerm.toLowerCase()));
 
-  // Function to get an appropriate file type icon
-  // const getFileTypeIcon = (fileType) => {
-  //   if (fileType.startsWith('image')) {
-  //     return <span><FiImage /> Image</span>;
-  //   } else if (fileType.startsWith('video')) {
-  //     return <span><FiVideo /> Video</span>;
-  //   } else if (fileType.startsWith('audio')) {
-  //     return <span><FiMusic /> Audio</span>;
-  //   } else if (fileType.startsWith('text')) {
-  //     return <span><FiFileText /> Text</span>;
-  //   } else if (fileType === 'application/pdf') {
-  //     return   <img
-  //     alt="..."
-  //     src={require("assets/img/pdf_icon-fotor-bg-remover-20231024162137.png")}
-  //     style={{ width: "20%", height: "100%" }}
-  //   ></img>; // Special handling for PDF files
-  //   }
-  //   return <span><FiFile /> File</span>;
-  // };
 
   const getFileTypeIcon = (fileType) => {
     switch(fileType) {
@@ -596,7 +579,9 @@ function getContributorFromCookie() {
                     
           </label>
         </div>
-
+        {isLoading ? (
+          <div>Loading Files...</div>
+        ) : (
         <Table className='fileTable' style={{ fontFamily: "Avenir LT Pro 35 Light, sans-serif", fontSize: "14px", maxWidth:"100%" }}>
           <thead style={{ fontFamily: "Avenir LT Pro 35 Light, sans-serif", fontSize: "13px", fontWeight: 400 }}>
             <tr>
@@ -670,31 +655,6 @@ function getContributorFromCookie() {
             .map((file, index) => (
                 <tr key={index} style={{ padding: '50px', justifyContent: "left" }}>
               
-
-              {/* <td
-                style={{ cursor: 'pointer', color: '', fontSize: "14.5px", width: "40%", padding: "4% 0%", textAlign: "left" }}
-                onClick={() => viewFile(file.id)} // This line executes the download function on click
-                >
-                <div>
-  {file.fileType === 'application/pdf' ? (
-    <div>
-      <img className='file-img'
-        alt="PDF Icon"
-        src={require("assets/img/pdf_icon-fotor-bg-remover-20231024162137.png")}
-        style={{ width: "13%", height: "auto" }}
-      />
-      {file.fileName}
-      <div style={{ fontSize: "13px", color: "gray", paddingLeft: "13%" }}>{file.fileSize}</div>
-    </div>
-  ) : (
-    <div>
-      {file.fileType} {file.fileName}
-      <div style={{ fontSize: "14px", color: "gray", paddingLeft: "22% " }}>{file.fileSize}</div>
-    </div>
-  )}
-</div>
-
-              </td> */}
               <td style={{ cursor: 'pointer', color: '', fontSize: "14.5px", width: "40%", padding: "4% 0%", textAlign: "left" }}
               onClick={() => viewFile(file.id)}>
                 {getFileTypeIcon(file.fileType)} {file.fileName}
@@ -746,6 +706,7 @@ function getContributorFromCookie() {
             ))}
           </tbody>
         </Table>
+        )}
       <style>
         {`
         /* CSS file (e.g., styles.css) */

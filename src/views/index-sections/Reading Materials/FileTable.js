@@ -55,6 +55,7 @@ const FileTable = () => {
   const [profilePicture, setProfilePicture] = useState("");
   const [favoritedFiles, setFavoritedFiles] = useState([]);
   const [isMobile, setIsMobile] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
 
   const toggleDropdown = (index) => {
@@ -162,21 +163,22 @@ const handleFileUpload = async (uploadedFile) => {
   
   const fetchFileDetails = () => {
     // Make a GET request to the server's /get-file-details route
-    // const email = getCookie('email');
-    // setContributor(email);
-    axios.get('https://vnsserver.onrender.com/get-file-details')
-      .then((response) => {
-        const filesWithDropdownState = response.data.map((file, index) => ({
-          ...file,
-          dropdownOpen: false
-        }));
-        console.log("files at frontend ",filesWithDropdownState)
-        setFiles(filesWithDropdownState);
-      })
-      .catch((error) => {
-        console.error('Error fetching file details:', error);
-      });
-
+    setIsLoading(true);
+  axios.get('https://vnsserver.onrender.com/get-file-details')
+    .then((response) => {
+      const filesWithDropdownState = response.data.map((file, index) => ({
+        ...file,
+        dropdownOpen: false
+      }));
+      console.log("files at frontend ",filesWithDropdownState)
+      setFiles(filesWithDropdownState);
+      setIsLoading(false);
+    })
+    .catch((error) => {
+      console.error('Error fetching file details:', error);
+      setIsLoading(false);
+    });
+    
   };
    // Use the useEffect hook to fetch file details when the component is mounted
    useEffect(() => {
@@ -596,6 +598,9 @@ function getContributorFromCookie() {
               </th>
             </tr>
           </thead>
+          {isLoading ? (
+          <div>Loading Files...</div>
+        ) : (
           <tbody className='tbody-class' style={{ maxWidth:"100%"}}>
           {files
             .map((file, index) => (
@@ -669,6 +674,7 @@ function getContributorFromCookie() {
               </tr>
             ))}
           </tbody>
+        )}
         </Table>
       <style>
         {`

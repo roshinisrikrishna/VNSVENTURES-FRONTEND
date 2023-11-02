@@ -68,6 +68,7 @@ function BlogListShort({ blogs }) {
   const [username, setUsername] = useState(null);
   const [toggledFileIds, setToggledFileIds] = useState([]);
   const [favoritedBlogs, setFavoritedBlogs] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
 
 
@@ -195,20 +196,19 @@ function BlogListShort({ blogs }) {
   // Inside your React component where you want to fetch the blog data
   useEffect(() => {
    
-    axios.get('https://vnsserver.onrender.com/get-blogs')
-      .then((response) => {
-        const data = response.data;
-        console.log('Retrieved blog data:', data);
-
-        // Sort the blogs based on the uploaded date in descending order (most recent first)
-        data.sort((a, b) => new Date(b.date) - new Date(a.date));
-        
-        setBlogSet(data);
-        // Update your component's state or perform other actions with the data
-      })
-      .catch((error) => {
-        console.error('Error fetching blog data:', error);
-      });
+    setIsLoading(true);
+  axios.get('https://vnsserver.onrender.com/get-blogs')
+    .then((response) => {
+      const data = response.data;
+      console.log('Retrieved blog data:', data);
+      data.sort((a, b) => new Date(b.date) - new Date(a.date));
+      setBlogSet(data);
+      setIsLoading(false);
+    })
+    .catch((error) => {
+      console.error('Error fetching blog data:', error);
+      setIsLoading(false);
+    });
       const favoritedBlogIds = document.cookie.split(';')
       .map(cookie => cookie.trim())
       .filter(cookie => cookie.startsWith('favoritedBlog='))
@@ -406,8 +406,8 @@ function BlogListShort({ blogs }) {
   }
   
     return (
-      <Container style={{ maxWidth: '85%', color:"black" }}>
-        {username ? (
+      <>
+      {username ? (
         <Button
           as="span"
           style={{
@@ -421,6 +421,11 @@ function BlogListShort({ blogs }) {
           Add Blog
         </Button>
       ):null}
+      {isLoading ? (
+      <div>Loading Blogs...</div>
+    ) :(
+      <Container style={{ maxWidth: '85%', color:"black" }}>
+        
       
         {currentBlogs.map((blog) => (
             <div key={blog.id}  style={{ cursor: 'pointer', background: "rgb(253, 253, 253, 0.9)" }}>
@@ -664,7 +669,10 @@ function BlogListShort({ blogs }) {
         }
         `}
       </style>
+      
     </Container>
+    )}
+    </>
   );
 }
 
