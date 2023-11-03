@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Card } from "reactstrap";
 import { motion } from "framer-motion";
 import Avatar from '@mui/material/Avatar'; // Import the Avatar component
 import { deepOrange, deepPurple } from '@mui/material/colors'; // Import MUI colors
+import { HashLink } from 'react-router-hash-link';
+
 
 // Animation variants for fading in elements
 const fadeInAnimationVariants = {
@@ -22,6 +25,17 @@ const fadeInAnimationVariants = {
 };
 
 function Typography() {
+  const targetSectionRef = useRef(null);
+  const navigate = useNavigate();
+ 
+  const handleClick = () => {
+   navigate('/about-me');
+   window.scrollTo({
+     top: targetSectionRef.current.offsetTop,
+     behavior: 'smooth'
+   });
+  };
+
   return (
     <Container className="mt-5 pt-5 pb-5 goal-main" style={{ justifyContent: "center", alignItems: "center", textAlign: "center" }}>
       <h1 className="goal-h1" style={{ fontFamily: "Futura LT W01 Medium, sans-serif", fontSize: "210%", fontWeight: 600 }}>Getting Started</h1>
@@ -68,11 +82,20 @@ function Typography() {
    fontWeight: 500,
    margin: "20px 0",
    textDecoration:"underline",
-   fontFamily: "Avenir LT Pro 35 Light, sans-serif"
-
-}}>
-  More Resources
-</p>
+   fontFamily: "Avenir LT Pro 35 Light, sans-serif",
+   textUnderlineOffset: "8px", // Increase the distance between the text and the underline
+        cursor:"pointer",
+        fontFamily: "Avenir LT Pro 35 Light, sans-serif",
+        ':hover': {
+          cursor: 'pointer'
+        },
+        color:"black"
+        
+}} >
+     <HashLink to="/#gettingstarted" smooth={true} style={{color:"black"}}>
+     More Resources
+   </HashLink>
+    </p>
       <style>
         {`
           
@@ -186,6 +209,9 @@ function Typography() {
       
         `}
       </style>
+      <div ref={targetSectionRef}>
+       {/* Content of the second page */}
+     </div>
     </Container>
   );
 }

@@ -24,14 +24,14 @@ function Typography() {
   const navigate = useNavigate();
 
   return (
-    <div className="career-main">
+    <div id="gettingstarted" className="career-main">
     <Row style={{ letterSpacing: "1px"}}>
       
     <Col lg={3} className="career-col" style={{ backgroundColor: "#CCC6C6",padding:"3%", justifyContent: "center", textAlign: "center", lineHeight: "1.2em"}}>
     <h1 className="career-h1" style={{ fontFamily: "Futura LT W01 Medium, sans-serif",fontSize: "180%", fontWeight: 800, margin: "20px 0", padding: "0" }}>1.</h1>
     <h1 className="career-h1" style={{ fontFamily: "Futura LT W01 Medium, sans-serif",fontSize: "180%", fontWeight: 500, margin: "0", padding: "0" }}>RFLABS</h1>
     <p className="career-p" style={{ fontFamily: "Futura LT W01 Medium, sans-serif",fontSize: "80%", fontWeight: 600, margin: "50px 0 0 0", lineHeight: "1", letterSpacing: "-0.2px" }}>
-  CEO, rflabs.in
+  CEO, RFLABS
 </p>
 <p className="career-p2" style={{fontFamily: "Avenir LT Pro 35 Light, sans-serif",color:"#4a4949", fontSize: "80%", fontWeight: "lighter", margin: "10px 0", lineHeight: "1", letterSpacing: "0px" }}>
   We develop innovative IOT solutions which save time and money for any organization
@@ -41,8 +41,13 @@ function Typography() {
   fontSize: "80%",
   fontWeight: 500,
   margin: "20px 0",
+  cursor: "pointer",
   textDecoration:"underline",
-  fontFamily: "Avenir LT Pro 35 Light, sans-serif"
+  textUnderlineOffset: "8px", // Increase the distance between the text and the underline
+  fontFamily: "Avenir LT Pro 35 Light, sans-serif",
+  ':hover': {
+    cursor: 'pointer'
+  }
 }}  onClick={() => window.open('https://www.rflabs.in', '_blank')}>
   Read More
 </p>
@@ -50,32 +55,40 @@ function Typography() {
         <Col lg={3} className="career-col" style={{backgroundColor:"#F0EDED",padding:"3%",justifyContent: "center", textAlign: "center", lineHeight: "1.2em"}}>
          <h1 className="career-h1" style={{fontFamily: "Futura LT W01 Medium, sans-serif",fontSize: "180%", fontWeight: 800, margin: "20px 0", padding: "0" }}>2.</h1>
           <h1 className="career-h1" style={{fontFamily: "Futura LT W01 Medium, sans-serif",fontSize: "180%", fontWeight: 500, margin: "0", padding: "0" }}>Skilled Cohort</h1>
-          <p className="career-p" style={{fontFamily: "Futura LT W01 Medium, sans-serif",fontSize: "80%", fontWeight: 600, margin: "50px 0 0 0", lineHeight: "1", letterSpacing: "-0.2px" }}>CTO, skilledcohort.com</p>
+          <p className="career-p" style={{fontFamily: "Futura LT W01 Medium, sans-serif",fontSize: "80%", fontWeight: 600, margin: "50px 0 0 0", lineHeight: "1", letterSpacing: "-0.2px" }}>CTO, SKILLEDCOHORT</p>
           <p className="career-p2" style={{  fontFamily: "Avenir LT Pro 35 Light, sans-serif",fontSize: "80%", fontWeight: 400, margin: "10px 0", lineHeight: "1", letterSpacing: "-0.2px" }}> We make salesforce work for you.We are offcial salesforce partners and specialize in revops and security</p>
-<p className="career-pr2" style={{
-   fontSize: "80%",
-   fontWeight: 500,
-   margin: "20px 0",
-   textDecoration:"underline",
-   fontFamily: "Avenir LT Pro 35 Light, sans-serif"
-
-}}  onClick={() => window.open('https://cohort.com', '_blank')}>
-  Read More
+          <p className="career-pr2" style={{
+  fontSize: "80%",
+  fontWeight: 500,
+  margin: "20px 0",
+  cursor: "pointer",
+  textDecoration:"underline",
+  textUnderlineOffset: "8px", // Increase the distance between the text and the underline
+  fontFamily: "Avenir LT Pro 35 Light, sans-serif",
+  ':hover': {
+    cursor: 'pointer'
+  }
+}} onClick={() => window.open('https://skilledcohort.com', '_blank')}>
+ Read More
 </p>
 
         </Col>
         <Col lg={3} className="career-col" style={{backgroundColor:"#FADCD6",padding:"3%",justifyContent: "center", textAlign: "center", lineHeight: "1.2em"}}>
          <h1 className="career-h1" style={{fontFamily: "Futura LT W01 Medium, sans-serif",fontSize: "180%", fontWeight: 800, margin: "20px 0", padding: "0" }}>3.</h1>
           <h1 className="career-h1" style={{fontFamily: "Futura LT W01 Medium, sans-serif",fontSize: "180%", fontWeight: 500, margin: "0", padding: "0" }}>VNS Ventures</h1>
-          <p className="career-p" style={{fontFamily: "Futura LT W01 Medium, sans-serif",fontSize: "80%", fontWeight: 600, margin: "50px 0 0 0", lineHeight: "1", letterSpacing: "-0.2px" }}>CEO, vnsventures.com</p>
+          <p className="career-p" style={{fontFamily: "Futura LT W01 Medium, sans-serif",fontSize: "80%", fontWeight: 600, margin: "50px 0 0 0", lineHeight: "1", letterSpacing: "-0.2px" }}>CEO, VNSVENTURES</p>
           <p className="career-p2" style={{  fontFamily: "Avenir LT Pro 35 Light, sans-serif",fontSize: "80%", fontWeight: 400, margin: "10px 0", lineHeight: "1", letterSpacing: "-0.2px" }}> Dreams to Reality</p>
 <p className="career-pr3" style={{
-  fontSize: "80%",
-  fontWeight: 500,
-  margin: "20px 0",
-  textDecoration:"underline",
-  fontFamily: "Avenir LT Pro 35 Light, sans-serif"
-
+ fontSize: "80%",
+ fontWeight: 500,
+ margin: "20px 0",
+ cursor: "pointer",
+ textDecoration:"underline",
+ textUnderlineOffset: "8px", // Increase the distance between the text and the underline
+ fontFamily: "Avenir LT Pro 35 Light, sans-serif",
+ ':hover': {
+   cursor: 'pointer'
+ }
 }} onClick={() => navigate('/trading')}>
   Read More
 </p>
@@ -87,13 +100,18 @@ function Typography() {
           <p className="career-p" style={{fontFamily: "Futura LT W01 Medium, sans-serif",fontSize: "80%", fontWeight: 600, margin: "20px 0 0 0", lineHeight: "1", letterSpacing: "-0.2px" }}>Cochair,board member</p>
           <p className="career-p2" style={{fontFamily: "Avenir LT Pro 35 Light, sans-serif",fontSize: "80%", fontWeight: 400, margin: "10px 0", lineHeight: "1", letterSpacing: "-0.2px" }}> Enhance people lives</p>
           <p className="career-pr4" style={{
-  fontSize: "80%",
-  fontWeight: 500,
-  margin: "20px 0",
-  textDecoration:"underline",
-  fontFamily: "Avenir LT Pro 35 Light, sans-serif"
+ fontSize: "80%",
+ fontWeight: 500,
+ margin: "20px 0",
+ cursor: "pointer",
+ textDecoration:"underline",
+ textUnderlineOffset: "8px", // Increase the distance between the text and the underline
+ fontFamily: "Avenir LT Pro 35 Light, sans-serif",
+ ':hover': {
+   cursor: 'pointer'
+ }
 }} onClick={() => navigate('/my-approach')}>
-  Read More
+ Read More
 </p>
 
 
@@ -178,7 +196,7 @@ function Typography() {
           
         }
         .career-pr2{
-          padding-top: 8% !important;
+          padding-top: 14.5% !important;
           
         }
         .career-pr3{

@@ -21,7 +21,14 @@ import {
 
 import { Row } from 'react-bootstrap';
 import { FaComment } from 'react-icons/fa'; // You need to import the comment icon from a relevant library
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faSearch,
+  faArrowDown,
+  faStar as faStarRegular,
+  faFile,
+  faBars, // Add the bars icon
+} from '@fortawesome/free-solid-svg-icons';
 
 
 
@@ -29,26 +36,17 @@ import { FaComment } from 'react-icons/fa'; // You need to import the comment ic
   const ITEM_HEIGHT = 48;
   
 
-function formatDate(dateString) {
-  const [day, month, year] = dateString.split('/'); // Split the date string
-  const options = {
-    month: 'short',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
-  };
-
-  // Create a new Date object with the components in the right order
-  const date = new Date(`${month}/${day}/${year}`);
-
-  // Check if the date is valid before formatting
-  if (isNaN(date.getTime())) {
-    return "Invalid Date";
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) {
+      // Date is not valid
+      console.error('Invalid date:', dateString);
+      return '';
+    }
+    const options = {  month: 'short', day: 'numeric' };
+    return new Intl.DateTimeFormat('en-US', options).format(date);
   }
 
-  const formattedDate = date.toLocaleDateString('en-US', options);
-  return formattedDate;
-}
 function BlogListShort({ blogs }) {
   const [selectedBlogId, setSelectedBlogId] = useState(null);
   const [selectedBlog, setSelectedBlog] = useState(null);
@@ -69,14 +67,18 @@ function BlogListShort({ blogs }) {
   const [toggledFileIds, setToggledFileIds] = useState([]);
   const [favoritedBlogs, setFavoritedBlogs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
+  const [searchTerm, setSearchTerm] = useState(""); // Add this line
+  const [isSearchVisible, setSearchVisible] = useState(false);
+  const [show, setShow] = useState(false);
+  const [showStates, setShowStates] = useState({});
+  const [showFavoriteMessage, setShowFavoriteMessage] = useState({});
 
 
   // Logic to determine the blogs to display based on the current page
+  const filteredBlogs = blogsPerPage ? blogSet.filter(blog => blog.title.toLowerCase().includes(searchTerm.toLowerCase())) : [];
   const indexOfLastBlog = currentPage * blogsPerPage;
   const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
-  const currentBlogs = blogsPerPage ? blogSet.slice(indexOfFirstBlog, indexOfLastBlog) : [];
-
+  const currentBlogs = filteredBlogs.slice(indexOfFirstBlog, indexOfLastBlog);
 
   const totalPages = Math.ceil(blogSet.length / blogsPerPage);
 
@@ -112,16 +114,6 @@ function BlogListShort({ blogs }) {
   
   const navigate = useNavigate();
 
-   // Retrieve the favorited blog IDs from cookies when the component mounts
-  //  useEffect(() => {
-  //   const favoritedBlogIds = document.cookie.split(';')
-  //     .map(cookie => cookie.trim())
-  //     .filter(cookie => cookie.startsWith('favoritedBlog='))
-  //     .map(cookie => cookie.replace('favoritedBlog=', ''))
-  //     .map(blogId => parseInt(blogId, 10));
-
-  //   setFavoritedBlogs(favoritedBlogIds);
-  // }, []);
 
   const handleFavoriteClick = (id) => {
     const alreadyFavorited = favoritedBlogs.includes(id);
@@ -131,6 +123,11 @@ function BlogListShort({ blogs }) {
       axios.put(`https://vnsserver.onrender.com/increment-favorite-count/${id}`)
         .then(() => {
           console.log('Favorite count incremented successfully');
+
+          setShowFavoriteMessage(prevStates => ({ ...prevStates, [id]: true }));
+          setTimeout(() => {
+            setShowFavoriteMessage(prevStates => ({ ...prevStates, [id]: false }));
+          }, 1000);
           // Update the state to reflect the new favorite count
           const updatedBlogs = blogSet.map(blog => {
             if (blog.id === id) {
@@ -324,7 +321,13 @@ function BlogListShort({ blogs }) {
       .post(`https://vnsserver.onrender.com/add-comment/${id}`, { text: commentText })
       .then((response) => {
         console.log('Comment added successfully');
-  
+        setShowStates(prevStates => ({ ...prevStates, [id]: true }));
+
+        setShow(true)
+        setTimeout(() => {
+          setShowStates(prevStates => ({ ...prevStates, [id]: false }));
+        }, 1000);
+
         // After adding the comment, update the comment count in the UI
         const updatedBlogs = blogSet.map((blog) => {
           if (blog.id === id) {
@@ -355,29 +358,7 @@ function BlogListShort({ blogs }) {
     setCommentText(event.target.value);
   };
       
-  
-  function formatDate(dateString) {
-    // Create a new Date object from the date string
-    const date = new Date(dateString);
-  
-    // Check if the date is valid before formatting
-    if (isNaN(date.getTime())) {
-      return "Invalid Date";
-    }
-  
-    // Format the date
-    const options = {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric'
-    };
-    const formattedDate = date.toLocaleDateString('en-US', options);
-  console.log("formatted ",formattedDate)
-    return formattedDate;
-  }
-  
+    
   function getTimeDifference(uploadDate) {
     const now = new Date();
     const uploadedAt = new Date(uploadDate);
@@ -407,6 +388,41 @@ function BlogListShort({ blogs }) {
   
     return (
       <>
+    
+      {isLoading ? (
+      <div>Loading Blogs...</div>
+    ) :(
+      <Container style={{ maxWidth: '85%', color:"black" }}>
+        <div
+          style={{
+            fontFamily: "Avenir LT Pro 35 Light, sans-serif",
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginBottom: '30px',
+            marginTop: '50px',
+
+          }}
+        >
+          {/* <p style={{ flex: 1, fontSize: "16px", textAlign: 'left' }}>All Posts</p> */}
+          <div
+            style={{
+              cursor: 'pointer',
+              padding: '2px',
+              display: 'flex',
+              alignItems: 'center',
+            }}
+            onClick={() => setSearchVisible(!isSearchVisible)}
+          >
+            <FontAwesomeIcon icon={faSearch} style={{ fontSize: "14px" }} />
+          </div>
+          {isSearchVisible && (
+            <TextField
+            label="Search blogs"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          )}
       {username ? (
         <Button
           as="span"
@@ -418,13 +434,12 @@ function BlogListShort({ blogs }) {
           }}
           onClick={addBlog}
         >
-          Add Blog
+          +Blog
         </Button>
-      ):null}
-      {isLoading ? (
-      <div>Loading Blogs...</div>
-    ) :(
-      <Container style={{ maxWidth: '85%', color:"black" }}>
+      ):null}     
+
+                    
+        </div>
         
       
         {currentBlogs.map((blog) => (
@@ -496,7 +511,8 @@ function BlogListShort({ blogs }) {
               </div>
                 <div onClick={() => viewBlogById(blog.id)} style={{ display: 'flex', textAlign:"left",justifyContent:"left",alignItems:"flex-start", marginTop: '8px' }}>
                   <Typography variant="body2" color="textSecondary" style={{fontFamily: "Futura LT W01 Medium, sans-serif", color:"black",}}>
-                    {getTimeDifference(blog.date)}
+                    {" "}{formatDate(blog.date || new Date().toISOString())}{` .    4min read`}
+
                   </Typography>
                 </div>
                 <div onClick={() => viewBlogById(blog.id)} style={{ display: 'flex', textAlign:"left",justifyContent:"left",alignItems:"flex-start", marginTop: '8px' }}>
@@ -533,19 +549,27 @@ function BlogListShort({ blogs }) {
 >
   {blog.favorites > 0 ? (
     <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
-    <span style={{ position: 'absolute', top: '-10px', left: '50%', transform: 'translateX(-50%)', fontSize: "50%" }}>{blog.favorites}</span>
+  <span style={{ position: 'absolute', top: '-10px', right: '0', fontSize: "50%" }}>{blog.favorites}</span>
     <FavoriteIcon sx={{ color: pink[500] }} />
   </div>
   
   ) : (
     <FavoriteBorderOutlinedIcon sx={{ color: pink[500] }} />
   )}
+      {showFavoriteMessage[blog.id] && <sup className='ml-1' style={{fontSize: "50%"}}>Liked!</sup>}
+
 </IconButton>
 
 
 
    </Grid>
-
+   {showStates[blog.id] && (
+  <Container className="" style={{ background: '#a0fab8', maxWidth: "100%", paddingTop: '5px', paddingBottom:'5px' }}>
+    <div style={{ maxWidth:"100%",fontSize: "9px", letterSpacing: "1.5px", fontFamily: "Avenir LT Pro 35 Light, sans-serif", background: '#a0fab8', color: '#6E6E6D' }}>
+      Added Comment Successfully!!!!
+    </div>
+  </Container>
+)}
                 </div>
                 
 

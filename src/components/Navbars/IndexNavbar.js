@@ -22,6 +22,7 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import NavbarShort from "./NavbarShort";
 import SignUp from "views/index-sections/SignUp";
 import { Avatar } from '@material-ui/core';
+import { HashLink } from 'react-router-hash-link';
 
 function IndexNavbar() {
   const [collapseOpen, setCollapseOpen] = useState(false);
@@ -256,7 +257,11 @@ function IndexNavbar() {
               </NavItem>
               <NavItem>
                 <NavLink to="/contact" tag={Link} className="nav-link mr-3" style={{ fontFamily: "Avenir LT Pro 35 Light, sans-serif" }}>
-                  <p style={{ fontWeight: 400, color: "black", fontFamily: "Avenir LT Pro 35 Light, sans-serif" }}>Contact</p>
+                  <p style={{ fontWeight: 400, color: "black", fontFamily: "Avenir LT Pro 35 Light, sans-serif" }}>
+                  <HashLink to="/#contact" smooth={true} style={{color:"black"}}>
+                      Contact
+                    </HashLink>
+                  </p>
                 </NavLink>
               </NavItem>
             </Nav>

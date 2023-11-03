@@ -4,6 +4,8 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useRef } from "react";
 import emailjs from 'emailjs-com';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function Examples() {
@@ -15,14 +17,17 @@ function Examples() {
     emailjs.sendForm('service_3n9zoyh', 'template_61ophpq', form.current, '0_YtEx01a1OusTTDW')
       .then((result) => {
         console.log(result.text);
+        toast.success("Form submitted successfully");
       }, (error) => {
         console.log(error.text);
+        toast.error("Failed to submit form");
       });
 
     e.target.reset();
   }
   return (
-    <div style={{ height: "80vh", marginBottom:"3%",marginTop:"5%"}}>
+    <div id="contact" style={{  marginBottom:"1.3%",marginTop:"5%", maxWidth:"100%"}}>
+      <ToastContainer></ToastContainer>
       <div className="space-50"></div>
       <Container className="mb-5">
         <Row>
@@ -45,6 +50,7 @@ function Examples() {
             </Row>
           </Col>
           <Col lg="6" md="6">
+
   <form ref={form} onSubmit={sendEmail}>
     <Row>
       <Col lg="6" className="order-sm-1">
@@ -101,7 +107,7 @@ function Examples() {
         </Row>
       </Container>
       <div className="space-50"></div>
-      <Container className="mt-5 mb-md-5" style={{ background: '#E8EFF1', maxWidth: "100%", paddingTop: '20px', paddingBottom:"5px" }}>
+      <Container className="mt-5 mb-md-2" style={{ background: '#E8EFF1', maxWidth: "100%", paddingTop: '20px', paddingBottom:"20px" }}>
   <div style={{ fontSize: "13px", letterSpacing: "1.5px", fontFamily: "Avenir LT Pro 35 Light, sans-serif", background: '#E8EFF1', color: '#6E6E6D', textAlign: 'center' }}>
     © 2023 by VNS Ventures. Powered and secured by RFLABS
   </div>

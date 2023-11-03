@@ -5,17 +5,22 @@ import {
   InputGroupAddon,
   InputGroupText,
   InputGroup,
-  Button,
   ButtonToolbar,
   CustomInput,
   Container,
 } from 'reactstrap';
+import Button from '@mui/material/Button';
 import axios from 'axios';
 import BlogList from './BlogList';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from 'react-router-dom';
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
+import Alert from 'react-bootstrap/Alert';
+
+
 
 const getEmailFromCookie = () => {
   const cookies = document.cookie.split('; ');
@@ -59,6 +64,7 @@ const BlogPost = (props) => {
   const [currentBlog, setCurrentBlog] = useState(null);
   const [title, setTitle] = useState('');
   const navigate = useNavigate();
+  const [show, setShow] = useState(false);
 
 
   // Equivalent to componentDidMount and componentDidUpdate
@@ -156,13 +162,17 @@ const BlogPost = (props) => {
 
       // If creating a new blog, send a POST request to the server
       axios.post(uploadFileDetailsURL, newBlog)
-      .then((response) => {
-        console.log('New blog added successfully');
-        updateBlogList(); // Call the function to update the blog list
-      })
-      .catch((error) => {
-        console.error('Error creating blog:', error);
-      });
+        .then((response) => {
+          console.log('New blog added successfully');
+          updateBlogList(); // Call the function to update the blog list
+          setShow(true);
+          // toast.success('Blog Posted successfully!!!'); // Show the success toast
+        })
+        .catch((error) => {
+          console.error('Error creating blog:', error);
+          // toast.error('Error creating blog'); // Show the error toast
+        });
+
     }
     
    
@@ -188,65 +198,142 @@ const BlogPost = (props) => {
         </p> */}
 
         <h2 style={{ fontFamily: "Futura LT W01 Medium, sans-serif", fontSize: "180%", fontWeight: 600 }}>Write a Blog</h2>
-        <Form onSubmit={handleSubmit}>
-          <InputGroup className="mb-3">
-            <InputGroupText>Blog Title</InputGroupText>
-            <Input
-              type="text"
-              value={blog.title}
-              onChange={handleTitleChange}
-              disabled={props.currentBlog} // Disable the input field if the currentBlog state is set
-              placeholder="✏️ Write blog title..."
+        <Container style={{justifyContent: "center", alignItems: "center", textAlign: "center"}}>
+          {/* <ToastContainer /> */}
+        <Form onSubmit={handleSubmit} style={{maxWidth:"100%",justifyContent: "center", alignItems: "center", textAlign: "center" }}>
 
+          <div className="form-group mt-5 mb-5" style={{ fontFamily: "Futura LT W01 Medium, sans-serif", fontSize: "80%",textAlign:"left", alignItems:"flex-start",justifyContent:"flex-start"}}>
+            <label htmlFor="blogTitle" style={{ fontFamily: "Futura LT W01 Medium, sans-serif", fontSize: "140%",textAlign:"left", alignItems:"flex-start",justifyContent:"flex-start"}}>
+              Blog Title
+            </label>
+           <Input
+            type="text"
+            id="blogTitle"
+            name="blogTitle"
+            value={blog.title}
+            onChange={handleTitleChange}
+            disabled={props.currentBlog} // Disable the input field if the currentBlog state is set
+            placeholder="✏️ Write blog title..."
+            style={{
+              width: '100%',
+              padding: '12px 20px',
+              margin: '8px 0',
+              boxSizing: 'border-box',
+              border: '1px solid #ccc',
+              borderTop: 'none',
+              borderLeft: 'none',
+              borderRight: 'none',
+              borderRadius: '4px',
+              fontSize: '16px',
+              backgroundColor: 'white',
+            }}
             />
-          </InputGroup>
-          <InputGroup className="mb-3">
-            <InputGroupText>Blog Description</InputGroupText>
+
+          </div>
+       
+          <div className="form-group mt-5 mb-5" style={{ fontFamily: "Futura LT W01 Medium, sans-serif", fontSize: "80%",textAlign:"left", alignItems:"flex-start",justifyContent:"flex-start"}}>
+            <label htmlFor="blogDescription" style={{ fontFamily: "Futura LT W01 Medium, sans-serif", fontSize: "140%",}}>
+              Blog Description
+            </label>
             <Input
               type="textarea"
+              id="blogDescription"
+              name="blogDescription"
               value={blog.subtitle}
               onChange={handlesubtitleChange}
               disabled={props.currentBlog} // Disable the input field if the currentBlog state is set
               placeholder="✏️ Write blog description..."
-
+              style={{
+                width: '100%',
+                padding: '12px 20px',
+                margin: '8px 0',
+                boxSizing: 'border-box',
+                border: '1px solid #ccc',
+                borderTop: 'none',
+                borderLeft: 'none',
+                borderRight: 'none',
+                borderRadius: '4px',
+                fontSize: '16px',
+                backgroundColor: 'white',
+              }}
             />
-          </InputGroup>
-          <InputGroup className="mb-3">
-          <InputGroupText>Blog Content</InputGroupText>
-          <Input
-            type="textarea"
-            value={blog.description}
-            onChange={handleDescriptionChange}
-            disabled={props.currentBlog} // Disable the input field if needed
-            placeholder="✏️ Write blog content..."
-
-          />
-        </InputGroup>
-
-          <InputGroup className="mb-3">
-            <InputGroupText>Enter Image URL</InputGroupText>
+          </div>
+ 
+          <div className="form-group mt-5 mb-5" style={{ fontFamily: "Futura LT W01 Medium, sans-serif", fontSize: "80%",textAlign:"left", alignItems:"flex-start",justifyContent:"flex-start"}}>
+            <label htmlFor="blogContent" style={{ fontFamily: "Futura LT W01 Medium, sans-serif", fontSize: "140%",}}>
+              Blog Content
+            </label>
+            <Input
+              type="textarea"
+              id="blogContent"
+              name="blogContent"
+              value={blog.description}
+              onChange={handleDescriptionChange}
+              disabled={props.currentBlog} // Disable the input field if needed
+              placeholder="✏️ Write blog content..."
+              style={{
+                width: '100%',
+                padding: '12px 20px',
+                margin: '8px 0',
+                boxSizing: 'border-box',
+                border: '1px solid #ccc',
+                borderTop: 'none',
+                borderLeft: 'none',
+                borderRight: 'none',
+                borderRadius: '4px',
+                fontSize: '16px',
+                backgroundColor: 'white',
+              }}
+            />
+          </div>
+    
+          <div className="form-group mt-5 mb-5" style={{ fontFamily: "Futura LT W01 Medium, sans-serif", fontSize: "80%",textAlign:"left", alignItems:"flex-start",justifyContent:"flex-start"}}>
+            <label htmlFor="imageUrl" style={{ fontFamily: "Futura LT W01 Medium, sans-serif", fontSize: "140%",}}>
+              Enter Image URL
+            </label>
             <Input
               type="text"
+              id="imageUrl"
+              name="imageUrl"
               value={blog.image}
               onChange={handleImageChange}
               disabled={props.currentBlog} // Disable the input field if the currentBlog state is set
               placeholder="✏️ Paste blog image URL here..."
-
+              style={{
+                width: '100%',
+                padding: '12px 20px',
+                margin: '8px 0',
+                boxSizing: 'border-box',
+                border: '1px solid #ccc',
+                borderTop: 'none',
+                borderLeft: 'none',
+                borderRight: 'none',
+                borderRadius: '4px',
+                fontSize: '16px',
+                backgroundColor: 'white',
+              }}
             />
-            {/* <CustomInput
-              type="file"
-              id="imageUpload"
-              accept="image/*" // Allow only image files
-              onChange={handleImageChange}
-              disabled={props.currentBlog} // Disable the file input field if the currentBlog state is set
-            /> */}
-          </InputGroup>
-          <Button color="primary" type="submit">
-            Post Blog
-          </Button>
-          <Button color="secondary" onClick={handleDiscard}>Discard</Button>
+          </div>
+        
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <Button variant='contained' type="submit" style={{backgroundColor:"#899DA3"}} >
+              Post Blog
+            </Button>
+            <Button variant='text' onClick={handleDiscard} style={{color:"black"}}>Discard</Button>
+          </div>
+        
+    </Form>
+    {show && (
+   <Container className="" style={{ background: '#E8EFF1', maxWidth: "100%", paddingTop: '20px' }}>
+   <div style={{ fontSize: "16px", letterSpacing: "1.5px", fontFamily: "Avenir LT Pro 35 Light, sans-serif", background: '#E8EFF1', color: '#6E6E6D', textAlign: 'center' }}>
+     Blog Posted Succesfully!!!!
+   </div>
+ </Container>
+)}
+    
+    {/* <ToastContainer /> */}
 
-        </Form>
+    </Container>
       </Container>
     );
   }

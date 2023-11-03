@@ -38,7 +38,13 @@ their unique needs and vision, and then use our expertise to create a product th
   fontSize: "80%",
   fontWeight: 500,
   margin: "20px 0",
-  textDecoration:"underline"
+  textDecoration:"underline",
+  textUnderlineOffset: "8px", // Increase the distance between the text and the underline
+  cursor:"pointer",
+  fontFamily: "Avenir LT Pro 35 Light, sans-serif",
+  ':hover': {
+    cursor: 'pointer'
+  }
 }} onClick={() => navigate('/my-approach')}>
   Read More
 </p>
@@ -52,22 +58,26 @@ their unique needs and vision, and then use our expertise to create a product th
   ></img>
 </Col>
 
-        <Col className="approach-col" lg={3} style={{backgroundColor:"#CCC6C6",padding:"1% 2.5%",justifyContent: "center", textAlign: "center", lineHeight: "1.2em"}}>
+        <Col className="approach-col" lg={3} style={{backgroundColor:"#CCC6C6",padding:"5.5% 3% 0% 3%",justifyContent: "center", textAlign: "center", lineHeight: "1.2em"}}>
         <h1 className="approach-h2" style={{fontFamily: "Futura LT W01 Medium, sans-serif", fontSize: "180%", fontWeight: 500, margin: "0", padding: "0"}}>About Me</h1>
   
-  <p className="approach-p2" style={{ fontSize: "76.9%", fontWeight: 500, margin: "15px 0", lineHeight: "1.5em", letterSpacing: "0px",fontFamily: "Avenir LT Pro 35 Light, sans-serif" }}>
+  <p className="approach-p2" style={{ fontSize: "76.9%", fontWeight: 500, margin: "30px 0", lineHeight: "1.5em", letterSpacing: "0px",fontFamily: "Avenir LT Pro 35 Light, sans-serif" }}>
   Vikram N Subramaniam is a successful professional with a Master's degree in Engineering 
-  from Dalhousie University, Canada. He is the chairman of VNS group of companies, an 
-  Indian multinational group that operates across the globe. As a Software Architect by 
-  profession, he has achieved great success in his career. In addition to his professional
-   achievements, he is a keen investor with excellent business acumen. He has a 
-   philanthropic side and is known for his charitable work.<br/>   <span style={{
-        fontSize: "100%",
+  from Dalhousie University...<br/>   </p>
+  <p className="approach-pr" style={{
+        fontSize: "80%",
         fontWeight: 500,
         textDecoration:"underline",
+        textUnderlineOffset: "8px", // Increase the distance between the text and the underline
+        cursor:"pointer",
+        fontFamily: "Avenir LT Pro 35 Light, sans-serif",
+        ':hover': {
+          cursor: 'pointer'
+        }
+
       }} onClick={() => navigate('/about-me')}>
         Read More
-      </span></p>
+      </p>
        
 
 

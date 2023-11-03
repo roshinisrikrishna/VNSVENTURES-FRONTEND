@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {  Avatar } from '@material-ui/core';
+import {  Avatar, TextField} from '@material-ui/core';
 import { deepOrange } from '@material-ui/core/colors';
 import { Container, Table, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'; // Corrected import statements
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -454,22 +454,6 @@ function getContributorFromCookie() {
     }
   };
   
-  // const deleteFile = (id) => {
-  //   // Send a DELETE request to the server to delete the file
-  //   console.log("id at delete ",id)
-  //   axios.delete(`https://vnsserver.onrender.com/delete-file/${id}`)
-  //     .then((response) => {
-  //       if (response.status === 200) {
-  //         console.log('File deleted successfully');
-  //         // Update the state to remove the deleted file
-  //         const updatedFiles = files.filter((file) => file.id !== id);
-  //         setFiles(updatedFiles);
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error deleting file:', error);
-  //     });
-  // };
   const deleteFile = (id) => {
     // Display a confirmation dialog
     const userConfirmed = window.confirm("Are you sure you want to delete this file?");
@@ -543,7 +527,24 @@ function getContributorFromCookie() {
           }}
         >
           <p className='files-class' style={{ flex: 1, fontSize: "14px", textAlign: 'left' }}>Files & Folders</p>
-          
+          <div 
+            style={{
+              cursor: 'pointer',
+              padding: '8px',
+              display: 'flex',
+              alignItems: 'center',
+            }}
+            onClick={() => setSearchVisible(!isSearchVisible)}
+          >
+            <FontAwesomeIcon className='files-class' icon={faSearch} style={{ fontSize: "14px" }} />
+          </div>
+          {isSearchVisible && (
+            <TextField
+        label="Search by file name"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          )}
        
         </div>
 

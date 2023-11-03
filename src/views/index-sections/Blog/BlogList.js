@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardMedia, Typography, Avatar, Container, TextField } from '@material-ui/core';
 import { deepOrange } from '@material-ui/core/colors';
 import { Button } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -18,7 +19,13 @@ import {
   Input,
  
 } from 'reactstrap';
-
+import {
+  faSearch,
+  faArrowDown,
+  faStar as faStarRegular,
+  faFile,
+  faBars, // Add the bars icon
+} from '@fortawesome/free-solid-svg-icons'; 
 import { Row } from 'react-bootstrap';
 import { FaComment } from 'react-icons/fa'; // You need to import the comment icon from a relevant library
 import { useMediaQuery } from 'react-responsive';
@@ -30,26 +37,7 @@ import BlogListShort from './BlogListShort';
   const ITEM_HEIGHT = 48;
   
 
-function formatDate(dateString) {
-  const [day, month, year] = dateString.split('/'); // Split the date string
-  const options = {
-    month: 'short',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
-  };
 
-  // Create a new Date object with the components in the right order
-  const date = new Date(`${month}/${day}/${year}`);
-
-  // Check if the date is valid before formatting
-  if (isNaN(date.getTime())) {
-    return "Invalid Date";
-  }
-
-  const formattedDate = date.toLocaleDateString('en-US', options);
-  return formattedDate;
-}
 function BlogList({ blogs, title }) {
   const [selectedBlogId, setSelectedBlogId] = useState(null);
   const [selectedBlog, setSelectedBlog] = useState(null);
@@ -70,15 +58,19 @@ function BlogList({ blogs, title }) {
   const [toggledFileIds, setToggledFileIds] = useState([]);
   const [favoritedBlogs, setFavoritedBlogs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState(""); // Add this line
+  const [isSearchVisible, setSearchVisible] = useState(false);
+  const [show, setShow] = useState(false);
+  const [showStates, setShowStates] = useState({});
+  const [showFavoriteMessage, setShowFavoriteMessage] = useState({});
 
 
   const isMobile = useMediaQuery({ query: '(max-width: 766px)' });
 
-
-  // Logic to determine the blogs to display based on the current page
+  const filteredBlogs = blogsPerPage ? blogSet.filter(blog => blog.title.toLowerCase().includes(searchTerm.toLowerCase())) : [];
   const indexOfLastBlog = currentPage * blogsPerPage;
   const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
-  const currentBlogs = blogsPerPage ? blogSet.slice(indexOfFirstBlog, indexOfLastBlog) : [];
+  const currentBlogs = filteredBlogs.slice(indexOfFirstBlog, indexOfLastBlog);
 
 
   const totalPages = Math.ceil(blogSet.length / blogsPerPage);
@@ -120,6 +112,12 @@ function BlogList({ blogs, title }) {
       axios.put(`https://vnsserver.onrender.com/increment-favorite-count/${id}`)
         .then(() => {
           console.log('Favorite count incremented successfully');
+          setShowFavoriteMessage(prevStates => ({ ...prevStates, [id]: true }));
+          setTimeout(() => {
+            setShowFavoriteMessage(prevStates => ({ ...prevStates, [id]: false }));
+          }, 1000);
+          
+
           // Update the state to reflect the new favorite count
           const updatedBlogs = blogSet.map(blog => {
             if (blog.id === id) {
@@ -186,6 +184,7 @@ function BlogList({ blogs, title }) {
   useEffect(() => {
    
     setIsLoading(true);
+    console.log("called list of blogs")
   axios.get('https://vnsserver.onrender.com/get-blogs')
     .then((response) => {
       const data = response.data;
@@ -263,11 +262,7 @@ function BlogList({ blogs, title }) {
    
     
   }
-  const handleEditSubmit = () => {
-    // Update the blog on the server
-    console.log("edit id at handleSubmit",selectedBlog.id," title ",editedBlog.title)
-    
-  }
+
   
   const deleteBlogById = (id) => {
     // Display a confirmation dialog
@@ -323,6 +318,13 @@ function BlogList({ blogs, title }) {
       .post(`https://vnsserver.onrender.com/add-comment/${id}`, { text: commentText })
       .then((response) => {
         console.log('Comment added successfully');
+        setShowStates(prevStates => ({ ...prevStates, [id]: true }));
+
+        setShow(true)
+        setTimeout(() => {
+          setShowStates(prevStates => ({ ...prevStates, [id]: false }));
+        }, 1000);
+        
   
         // After adding the comment, update the comment count in the UI
         const updatedBlogs = blogSet.map((blog) => {
@@ -356,25 +358,14 @@ function BlogList({ blogs, title }) {
       
   
   function formatDate(dateString) {
-    // Create a new Date object from the date string
     const date = new Date(dateString);
-  
-    // Check if the date is valid before formatting
     if (isNaN(date.getTime())) {
-      return "Invalid Date";
+      // Date is not valid
+      console.error('Invalid date:', dateString);
+      return '';
     }
-  
-    // Format the date
-    const options = {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric'
-    };
-    const formattedDate = date.toLocaleDateString('en-US', options);
-  console.log("formatted ",formattedDate)
-    return formattedDate;
+    const options = {  month: 'short', day: 'numeric' };
+    return new Intl.DateTimeFormat('en-US', options).format(date);
   }
   
   function getTimeDifference(uploadDate) {
@@ -412,21 +403,57 @@ function BlogList({ blogs, title }) {
       <BlogListShort />
     ) : (
 
-      <Container style={{ maxWidth: '85%', color:"black" }}>
-          {username ? (
+      <Container style={{ marginTop: '100px',maxWidth: '85%', color:"black" }}>
+          
+        <div
+          style={{
+            fontFamily: "Avenir LT Pro 35 Light, sans-serif",
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginBottom: '30px',
+            marginTop: '50px',
+
+          }}
+        >
+          <p style={{ flex: 1, fontSize: "16px", textAlign: 'left' }}>All Posts</p>
+          <div
+            style={{
+              cursor: 'pointer',
+              padding: '8px',
+              display: 'flex',
+              alignItems: 'center',
+            }}
+            onClick={() => setSearchVisible(!isSearchVisible)}
+          >
+            <FontAwesomeIcon icon={faSearch} style={{ fontSize: "14px" }} />
+          </div>
+          {isSearchVisible && (
+            <TextField
+            label="Search blogs"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          )}
+      {username ? (
         <Button
           as="span"
           style={{
             backgroundColor: "#899DA3",
             borderRadius: "0px",
-            padding: "5px 19px",
+            padding: "5px 35px",
             border: "none",
           }}
           onClick={addBlog}
         >
           Add Blog
         </Button>
-      ):null}
+      ):null}     
+
+                    
+        </div>
+
+
       
         {currentBlogs.map((blog) => (
             <div key={blog.id}  style={{ cursor: 'pointer', background: "rgb(253, 253, 253, 0.9)" }}>
@@ -497,7 +524,8 @@ function BlogList({ blogs, title }) {
               </div>
                 <div onClick={() => viewBlogById(blog.id)} style={{ display: 'flex', textAlign:"left",justifyContent:"left",alignItems:"flex-start", marginTop: '8px' }}>
                   <Typography variant="body2" color="textSecondary" style={{fontFamily: "Futura LT W01 Medium, sans-serif", color:"black",}}>
-                    {getTimeDifference(blog.date)}
+                  {" "}{formatDate(blog.date || new Date().toISOString())}{` .    4min read`}
+
                   </Typography>
                 </div>
                 <div onClick={() => viewBlogById(blog.id)} style={{ display: 'flex', textAlign:"left",justifyContent:"left",alignItems:"flex-start", marginTop: '8px' }}>
@@ -534,18 +562,28 @@ function BlogList({ blogs, title }) {
 >
   {blog.favorites > 0 ? (
    <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
-   <span style={{ position: 'absolute', top: '-10px', left: '50%', transform: 'translateX(-50%)', fontSize: "50%" }}>{blog.favorites}</span>
+  <span style={{ position: 'absolute', top: '-10px', right: '0', fontSize: "50%" }}>{blog.favorites}</span>
    <FavoriteIcon sx={{ color: pink[500] }} />
  </div>
  
   ) : (
     <FavoriteBorderOutlinedIcon sx={{ color: pink[500] }} />
   )}
+    {showFavoriteMessage[blog.id] && <sup className='ml-2' style={{fontSize: "50%"}}>Liked!</sup>}
+
 </IconButton>
 
 
 
    </Grid>
+   {showStates[blog.id] && (
+  <Container className="" style={{ background: '#a0fab8', maxWidth: "100%", paddingTop: '5px', paddingBottom:'5px' }}>
+    <div style={{ fontSize: "13px", letterSpacing: "1.5px", fontFamily: "Avenir LT Pro 35 Light, sans-serif", background: '#a0fab8', color: '#6E6E6D' }}>
+      Added Comment Successfully!!!!
+    </div>
+  </Container>
+)}
+
 
                 </div>
                 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {  Avatar } from '@material-ui/core';
+import {  Avatar, TextField } from '@material-ui/core';
 import { deepOrange } from '@material-ui/core/colors';
 import { Container, Table, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'; // Corrected import statements
 import {
@@ -338,15 +338,20 @@ function getContributorFromCookie() {
   const getFileTypeIcon = (fileType) => {
     switch(fileType) {
       case 'image':
-        return <FontAwesomeIcon icon={faFileImage} style={{fontSize:"26px"}}/>;
+        return <FontAwesomeIcon icon={faFileImage} style={{fontSize:"40px"}}/>;
       case 'audio':
-        return <FontAwesomeIcon icon={faFileAudio} style={{fontSize:"26px"}}/>;
+        return <FontAwesomeIcon icon={faFileAudio} style={{fontSize:"40px"}}/>;
       case 'video':
-        return <FontAwesomeIcon icon={faFileVideo} style={{fontSize:"26px"}}/>;
+        return <FontAwesomeIcon icon={faFileVideo} style={{fontSize:"40px"}}/>;
       case 'application/pdf':
-        return <FontAwesomeIcon icon={faFilePdf} style={{fontSize:"26px"}} />;
+        return   <img
+      alt="..."
+      src={require("assets/img/pdf.png")}
+      style={{ width: "20%", height: "100%" }}
+    ></img>;
+        // return <FontAwesomeIcon icon={faFilePdf} style={{fontSize:"40px"}} />;
       default:
-        return <FontAwesomeIcon icon={faFileAlt} style={{fontSize:"26px"}}/>;
+        return <FontAwesomeIcon icon={faFileAlt} style={{fontSize:"40px"}}/>;
     }
   };
   
@@ -545,12 +550,11 @@ function getContributorFromCookie() {
             <FontAwesomeIcon icon={faSearch} style={{ fontSize: "14px" }} />
           </div>
           {isSearchVisible && (
-            <input
-              type="text"
-              placeholder="Search by file name"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
+            <TextField
+        label="Search by file name"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+          />
           )}
        {contributor ? (
           <input
@@ -568,7 +572,7 @@ function getContributorFromCookie() {
               style={{
                 backgroundColor: "#899DA3",
                 borderRadius: "0px",
-                padding: "5px 19px",
+                padding: "5px 35px",
                 border: "none",
               }}
               onClick={toggleModal}
@@ -655,9 +659,11 @@ function getContributorFromCookie() {
             .map((file, index) => (
                 <tr key={index} style={{ padding: '50px', justifyContent: "left" }}>
               
-              <td style={{ cursor: 'pointer', color: '', fontSize: "14.5px", width: "40%", padding: "4% 0%", textAlign: "left" }}
+              <td style={{ cursor: 'pointer', color: '', fontSize: "14.5px", width: "40%", padding: "2.5% 0%", textAlign: "left" }}
               onClick={() => viewFile(file.id)}>
                 {getFileTypeIcon(file.fileType)} {file.fileName}
+                <div style={{ fontSize: "13px", color: "gray", paddingLeft: "21%", marginTop:"-5%" }}>{file.fileSize}</div>
+
               </td>
 
                 {/* <td style={{ padding: '4%', textAlign: 'left', fontSize:"13px", width:"20%" }}>{formatDate(file.uploadDate)}{}</td> */}

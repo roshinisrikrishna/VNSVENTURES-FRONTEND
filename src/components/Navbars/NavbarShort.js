@@ -25,6 +25,7 @@ import SignUp from "views/index-sections/SignUp";
 import { Avatar } from '@material-ui/core';
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import { HashLink } from 'react-router-hash-link';
 
 
 function NavbarShort() {
@@ -348,7 +349,9 @@ function NavbarShort() {
   <p className="nav-p"
     style={{ fontSize: "100%", margin: "0", padding: "0 0" }}
     >
-    Contact 
+    <HashLink to="/#contact" smooth={true} style={{color:"black"}}>
+        Contact
+    </HashLink> 
   </p>
   </NavLink>
   
